@@ -1,0 +1,62 @@
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}Privacy policy - Study Help{% endblock %}
+{%block content%}
+<!-- Wrapper -->
+<section id="wrapper">
+    <header>
+        <div class="inner">
+            <h2>Studyhelp privacy policy</h2>
+        </div>
+    </header>
+    <!-- Content -->
+        <div class="wrapper">
+            <div class="inner">
+                <h3 class="major">Lorem ipsum dolor</h3>
+                <p>
+                    We respect everyone’s privacy, hence we never ever share any of your personal details with any third parties. We consider this as our fundamental duty to safeguard your credentials like name, email ID, payment details, contact number, transaction details, etc. Whether you are browsing through the DoAssignmentHelp website or making any payment with us, everything happens under a secured ecosystem. Our policy and procedures have been robustly designed which prevents any information from leaking to anyone else. Here are the pointers that we strongly follow in DoAssignmentHelp.
+
+                    All your transactions with DoAssignmentHelp are done safely
+                    We never disclose student’s information to anyone.
+                    We never disclose assignment writers' information to anyone.
+                </p>
+            </div>
+        </div>
+</section>
+{%endblock%}
+{%block footer%}
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Get in touch</h2>
+        <p></p>
+        <form action="/privacy_policy/" method="post">
+            <div class="fields">
+                {%csrf_token%}
+                {%for field in form%}
+                <div class="field">
+                    <label for="{{field.id_for_label}}">{{field.id_for_label}}</label>
+                    {{field}}
+                </div>
+                {%endfor%}
+            </div>
+            <ul class="actions">
+                <li><input type="submit" value="Send Message" /></li>
+            </ul>
+        </form>
+        <ul class="contact">
+            <li class="icon solid fa-home">
+                Study Help<br />
+                Nairobi, KENYA<br />
+            </li>
+            <li class="icon solid fa-phone">+2547 77751299</li>
+            <li class="icon solid fa-envelope"><a href="#">studyhelpbusiness@gmail.com</a></li>
+            <li class="icon brands fa-twitter"><a href="#">twitter.com/studyhelp</a></li>
+            <li class="icon brands fa-facebook-f"><a href="#">facebook.com/studyhelp</a></li>
+            <li class="icon brands fa-instagram"><a href="#">instagram.com/studyhelp</a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}

@@ -1,0 +1,104 @@
+
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}Study help - Online writing{% endblock %}
+{%block content%}
+	<!-- Banner -->
+    <section id="banner">
+        <div class="inner">
+            <h2>Study Help</h2>
+            {%for header in headers%}
+            <p>{{header.text}}<a href="/create_order/" class="special">Order Now</a></p>
+            {%endfor%}
+        </div>
+    </section>
+
+<!-- Wrapper -->
+    <section id="wrapper">
+            <!-- Three -->
+                <section id="three" class="wrapper spotlight style3">
+                    <div class="inner">
+                        <a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
+                        <div class="content">
+                            <h2 class="major">How we work</h2>
+                            <p>You will recieve a draft first, analyze it and after your approval, you will recieve your paper in an editable format. </p>
+                            <a href="/create_order/" class="special">Order now</a>
+                        </div>
+                    </div>
+                </section>
+    
+            <!-- Four -->
+                <section id="four" class="wrapper alt style1">
+                    <div class="inner">
+                        <h2 class="major">Samples</h2>
+                        <p>Have a look at our previous works</p>
+                        <section class="features">
+                            <article>
+                                <a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
+                                <h3 class="major">Sed feugiat lorem</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
+                                <a href="#" class="special">Learn more</a>
+                            </article>
+                            <article>
+                                <a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
+                                <h3 class="major">Nisl placerat</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
+                                <a href="#" class="special">Learn more</a>
+                            </article>
+                            <article>
+                                <a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>
+                                <h3 class="major">Ante fermentum</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
+                                <a href="#" class="special">Learn more</a>
+                            </article>
+                            <article>
+                                <a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+                                <h3 class="major">Fusce consequat</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
+                                <a href="#" class="special">Learn more</a>
+                            </article>
+                        </section>
+                        <ul class="actions">
+                            <li><a href="#" class="button">Browse All</a></li>
+                        </ul>
+                    </div>
+                </section>    
+    </section>
+{%endblock%}
+{%block footer%}
+
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Get in touch</h2>
+        <p></p>
+        <form method="post" action="/">
+            <div class="fields">
+                {%csrf_token%}
+                {%for field in form%}
+                <div class="field">
+                    <label for="{{field.id_for_label}}">{{field.id_for_label}}</label>
+                    {{field}}
+                </div>
+                {%endfor%}
+            </div>
+            <ul class="actions">
+                <li><input type="submit" value="Send Message" /></li>
+            </ul>
+        </form>
+        <ul class="contact">
+            <li class="icon solid fa-home">
+                Study Help<br />
+                Nairobi, KENYA<br />
+            </li>
+            <li class="icon solid fa-phone">+2547 77751299</li>
+            <li class="icon solid fa-envelope"><a href="#">studyhelpbusiness@gmail.com</a></li>
+            <li class="icon brands fa-twitter"><a href="#">twitter.com/studyhelp</a></li>
+            <li class="icon brands fa-facebook-f"><a href="#">facebook.com/studyhelp</a></li>
+            <li class="icon brands fa-instagram"><a href="#">instagram.com/studyhelp</a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}

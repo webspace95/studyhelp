@@ -1,0 +1,104 @@
+
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}Study help - Make order{% endblock %}
+{%block content%}
+    <section id="footer">
+        <div class="inner">
+            <h2 class="major">Place your order</h2>
+            <p></p>
+            <form method="post" action="/">
+                <div class="fields">
+                    {%csrf_token%}
+                    {%for field in form%}
+                    <div class="field">
+                        <label for="{{field.id_for_label}}">{{field.id_for_label}}</label>
+                        {{field}}
+                    </div>
+                    {%endfor%}
+                </div>
+                <ul class="actions">
+                    <li><input type="submit" value="Place order" /></li>
+                </ul>
+            </form>
+            <ul class="contact">
+                <li class="icon solid fa-home">
+                    Study Help<br />
+                    Nairobi, KENYA<br />
+                </li>
+                <li class="icon solid fa-phone">+2547 77751299</li>
+                <li class="icon solid fa-envelope"><a href="#">studyhelpbusiness@gmail.com</a></li>
+                <li class="icon brands fa-twitter"><a href="#">twitter.com/studyhelp</a></li>
+                <li class="icon brands fa-facebook-f"><a href="#">facebook.com/studyhelp</a></li>
+                <li class="icon brands fa-instagram"><a href="#">instagram.com/studyhelp</a></li>
+            </ul>
+        </div>
+    </section>
+{%endblock%}
+{%block footer%}
+
+<section id="footer">
+    <div class="inner">
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}
+<!--
+<section>
+    <h3 class="major">Form</h3>
+    <form method="post" action="#">
+        <div class="row gtr-uniform">
+            <div class="col-6 col-12-xsmall">
+                <label for="demo-name">Name</label>
+                <input type="text" name="demo-name" id="demo-name" value="" />
+            </div>
+            <div class="col-6 col-12-xsmall">
+                <label for="demo-email">Email</label>
+                <input type="email" name="demo-email" id="demo-email" value="" />
+            </div>
+            <div class="col-12">
+                <label for="demo-category">Category</label>
+                <select name="demo-category" id="demo-category">
+                    <option value="">-</option>
+                    <option value="1">Manufacturing</option>
+                    <option value="1">Shipping</option>
+                    <option value="1">Administration</option>
+                    <option value="1">Human Resources</option>
+                </select>
+            </div>
+            <div class="col-4 col-12-small">
+                <input type="radio" id="demo-priority-low" name="demo-priority" checked>
+                <label for="demo-priority-low">Low Priority</label>
+            </div>
+            <div class="col-4 col-12-small">
+                <input type="radio" id="demo-priority-normal" name="demo-priority">
+                <label for="demo-priority-normal">Normal Priority</label>
+            </div>
+            <div class="col-4 col-12-small">
+                <input type="radio" id="demo-priority-high" name="demo-priority">
+                <label for="demo-priority-high">High Priority</label>
+            </div>
+            <div class="col-6 col-12-small">
+                <input type="checkbox" id="demo-copy" name="demo-copy">
+                <label for="demo-copy">Email me a copy</label>
+            </div>
+            <div class="col-6 col-12-small">
+                <input type="checkbox" id="demo-human" name="demo-human" checked>
+                <label for="demo-human">Not a robot</label>
+            </div>
+            <div class="col-12">
+                <label for="demo-message">Message</label>
+                <textarea name="demo-message" id="demo-message" rows="6"></textarea>
+            </div>
+            <div class="col-12">
+                <ul class="actions">
+                    <li><input type="submit" value="Send Message" class="primary" /></li>
+                    <li><input type="reset" value="Reset" /></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</section>
+-->

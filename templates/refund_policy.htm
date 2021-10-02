@@ -1,0 +1,70 @@
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}Privacy policy - Study Help{% endblock %}
+{%block content%}
+<!-- Wrapper -->
+<section id="wrapper">
+    <header>
+        <div class="inner">
+            <h2>Generic</h2>
+            <p>Phasellus non pulvinar erat. Fusce tincidunt nisl eget ipsum.</p>
+        </div>
+    </header>
+    <!-- Content -->
+        <div class="wrapper">
+            <div class="inner">
+                <h3 class="major">Lorem ipsum dolor</h3>
+                <p>
+                    Do Assignment help is highly focused on quality. We have specialized writer to do the specific tasks. We deliver all the paper by considering all the requirement of the client. We are the best when it comes to delivery. We respect the deadlines and follow them faithfully. But in case the client realizes that the company is not fulfilling its commitment, the clients are entitled to a partial or full refund.
+                    Our company policy allows you to request a refund; it might be fully or partial. If the Assignment help failed to fulfil their commitments towards you, you are liable to the refund policy. We, as a company, assure you to give 100% satisfactory results as your satisfaction is our reward! As a company, we are highly satisfied we our performance as we have 95% of satisfied customers who order to us consequential. However, sometimes things went in a different direction. For such cases, we have a refund policy. We want to emphasize that there are only certain situations when we can offer a full refund.
+                </p>
+                <h3 class="major">Our Refund Policies Are Stated Below</h3>
+                <p>
+                    Here is the list of all possible condition that we are considering for a full or partial refund. Feel free to contact us if you feel that you have been charged more than once for a single task. You can contact us through chat or e-mail. You can send the receipts to our e-mail. After the verification, your will refund back to you as soon as possible. If the given deadline has been missed, then the clients are entitled to a refund. However, if the deadline is delayed due to the client's uncertain and urgent changes, no refund shall be done to the client.
+                    Every one of the tasks is checked through different plagiarism tools before the assignment delivered to you. However, if the client feels that the specific content of the task contains plagiarism, we will reexamine the task and remove the plagiarism for you pointed without any cost; in such cases, we do not generate any refund.
+                    If the client has decided to cancel the order after the payment and the work has not been assigned to the company's writer, you can book another assignment of the same money value free of cost. However, if the writer starts working on the assigned assignment, the assignment will remain the same; we will refund your money.
+                    We aim to provide you with the best result for the given assignment or task. Therefore, we continue to work on the same until we did not reach a satisfactory solution to the given assignment. However, we have done all the rework within the span of a month (30 days). Therefore, if you ask to do the rework after that span of time, we can do the same. In that case, we are not going to generate any refund.
+                    There are significantly lesser chances that you get failed in the assignment done by us. But of doing so, in such case, we generate the refund of 50% of the amount paid by you. Kindly note that the authentic proof of getting "Fail" should be given in the time span of a month of completing the assignment. Such request will be entertained during the span of a month. We refund half of the money because we pay 50% advance to our writer for the particular assignment, and we cannot get that money back from the writer. Therefore, we do not continue with the writer that makes you fail. 
+                    We are very particular about assigning the client's assignment to the specific writer. However, if it is possible that the appropriate writer is not available for the given talk by the client, then in such case, we will generate the refund of the amount giving by the client to our company.
+                    NOTE: If your claim does not fall under any of the clauses mentioned above, you are not entitled to a refund, and hence no refund will be furnished.
+                </p>
+            </div>
+        </div>
+</section>
+{%endblock%}
+{%block footer%}
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Get in touch</h2>
+        <p></p>
+        <form action="/refund_policy/" method="post">
+            <div class="fields">
+                {%csrf_token%}
+                {%for field in form%}
+                <div class="field">
+                    <label for="{{field.id_for_label}}">{{field.id_for_label}}</label>
+                    {{field}}
+                </div>
+                {%endfor%}
+            </div>
+            <ul class="actions">
+                <li><input type="submit" value="Send Message" /></li>
+            </ul>
+        </form>
+        <ul class="contact">
+            <li class="icon solid fa-home">
+                Study Help<br />
+                Nairobi, KENYA<br />
+            </li>
+            <li class="icon solid fa-phone">+2547 77751299</li>
+            <li class="icon solid fa-envelope"><a href="#">studyhelpbusiness@gmail.com</a></li>
+            <li class="icon brands fa-twitter"><a href="#">twitter.com/studyhelp</a></li>
+            <li class="icon brands fa-facebook-f"><a href="#">facebook.com/studyhelp</a></li>
+            <li class="icon brands fa-instagram"><a href="#">instagram.com/studyhelp</a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}
