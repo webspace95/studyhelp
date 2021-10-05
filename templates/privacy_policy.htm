@@ -24,12 +24,13 @@
         </div>
 </section>
 {%endblock%}
+
 {%block footer%}
 <section id="footer">
     <div class="inner">
         <h2 class="major">Get in touch</h2>
         <p></p>
-        <form action="/privacy_policy/" method="post">
+        <form method="post" action="/">
             <div class="fields">
                 {%csrf_token%}
                 {%for field in form%}
@@ -44,18 +45,35 @@
             </ul>
         </form>
         <ul class="contact">
+            {%for address in addresses%}
             <li class="icon solid fa-home">
-                Study Help<br />
-                Nairobi, KENYA<br />
+                {{address.p_o_box}}<br />
+                {{address.location}}<br />
             </li>
-            <li class="icon solid fa-phone">+2547 77751299</li>
-            <li class="icon solid fa-envelope"><a href="#">studyhelpbusiness@gmail.com</a></li>
-            <li class="icon brands fa-twitter"><a href="#">twitter.com/studyhelp</a></li>
-            <li class="icon brands fa-facebook-f"><a href="#">facebook.com/studyhelp</a></li>
-            <li class="icon brands fa-instagram"><a href="#">instagram.com/studyhelp</a></li>
+            {%endfor%}
+
+            {%for phone in phone_numbers%}
+            <li class="icon solid fa-phone">{{phone.phone}}</li>
+            {%endfor%}
+            
+            {%for gmail in gmail_links %}
+            <li class="icon solid fa-envelope"><a href="#">{{gmail.link}}</a></li>
+            {%endfor%}
+
+            {%for twitter in twitter_accounts%}
+            <li class="icon brands fa-twitter"><a href="{{twitter.twitter}}">{{twitter.twitter}}</a></li>
+            {%endfor%}
+
+            {%for fb in fb_accounts%}
+            <li class="icon brands fa-facebook-f"><a href="{{fb.facebook}}">{{fb.facebook}}</a></li>
+            {%endfor%}
+
+            {%for ig in instagram_accounts%}
+            <li class="icon brands fa-instagram"><a href="{{ig.ig}}">{{ig.ig}}</a></li>
+            {%endfor%}   
         </ul>
         <ul class="copyright">
-            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="#">HtoStudios</a></li> <li><a href="/privacy_policy/">Privacy policy</a></li><li><a href="/about/">About</a></li>
         </ul>
     </div>
 </section>

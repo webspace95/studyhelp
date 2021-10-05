@@ -4,17 +4,15 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
-from django.conf.urls.static import static
-
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index_page),
     path(r'about/',views.about_view),
     path(r'privacy_policy/',views.privacy_policy),
-    path(r'refund_policy/',views.refund_policy),
-    path(r'terms_of_use/',views.terms_of_use),
     path(r'create_order/',views.create_order),
 ]
-
+#appending the static files urls to the above media
+urlpatterns += staticfiles_urlpatterns()
+#how to upload media..appending the media url to the patterns above
+urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

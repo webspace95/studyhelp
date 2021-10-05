@@ -55,7 +55,7 @@ class GmailLink(models.Model):
 class PhoneNumber(models.Model):
 
     name = models.TextField(default="phone number")
-    phone = models.FloatField()
+    phone = models.CharField(max_length=50)
 
     save_one_only('PhoneNumber')
 

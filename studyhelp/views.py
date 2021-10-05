@@ -1,15 +1,26 @@
 from django.shortcuts import render,redirect
 from .forms import ContactForm, OrderForm
 from contacts.models import Contact
-from jobs.models import Order,OrderFile, CancelledOrder, CompletedOrder, CurrentOrder
+from jobs.models import Order,OrderFile, CancelledOrder, CompletedOrder, CurrentOrder, Sample
 from .mailservice import send_contact_email,send_contact_notification,send_order_email,send_order_notification
-from page_edits.models import HomeHeader
+from page_edits.models import HomeHeader,HowWeWorkText,BrandName,Address,GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PhoneNumber,AboutPage
 
 def index_page(request):
+
     headers = HomeHeader.objects.all().order_by('date')
+    how_we_work_texts = HowWeWorkText.objects.all()
+    brands = BrandName.objects.all()
+    samples = Sample.objects.all()
+    addresses = Address.objects.all()
+    gmail_links = GmailLink.objects.all()
+    instagram_accounts = InstagramAccount.objects.all()
+    fb_accounts = FacebookAccount.objects.all()
+    twitter_accounts = TwitterAccount.objects.all()
+    phone_numbers = PhoneNumber.objects.all()
+    abouts = AboutPage.objects.all()
+    
     if request.method == 'POST':
         form =ContactForm(request.POST)
-
         if form.is_valid():
             
             #getting values of the form field
@@ -27,10 +38,32 @@ def index_page(request):
             return redirect('/')
     else:
         form = ContactForm()
-    return render(request,'index.htm',{'form':form,'headers':headers})
+    return render(request,'index.htm',{
+                                       'form':form,
+                                       'headers':headers,
+                                       'how_we_work_texts':how_we_work_texts,
+                                       'brands':brands,
+                                       'samples':samples,
+                                       'addresses':addresses,
+                                       'gmail_links':gmail_links,
+                                       'instagram_accounts':instagram_accounts,
+                                       'fb_accounts':fb_accounts,
+                                       'twitter_accounts':twitter_accounts,
+                                       'phone_numbers':phone_numbers
+                                       })
 
 #about view
 def about_view(request):
+
+    samples = Sample.objects.all()
+    addresses = Address.objects.all()
+    gmail_links = GmailLink.objects.all()
+    instagram_accounts = InstagramAccount.objects.all()
+    fb_accounts = FacebookAccount.objects.all()
+    twitter_accounts = TwitterAccount.objects.all()
+    phone_numbers = PhoneNumber.objects.all()
+    abouts = AboutPage.objects.all()
+
     if request.method == 'POST':
         form =ContactForm(request.POST)
 
@@ -50,9 +83,27 @@ def about_view(request):
             return redirect('/about/')
     else:
         form = ContactForm()
-    return render(request,'about.htm',{'form':form})
+    return render(request,'about.htm',{
+                                       'form':form,
+                                       'samples':samples,
+                                       'addresses':addresses,
+                                       'gmail_links':gmail_links,
+                                       'instagram_accounts':instagram_accounts,
+                                       'fb_accounts':fb_accounts,
+                                       'twitter_accounts':twitter_accounts,
+                                       'phone_numbers':phone_numbers,
+                                       'abouts':abouts,
+                                       })
 
 def privacy_policy(request):
+
+    addresses = Address.objects.all()
+    gmail_links = GmailLink.objects.all()
+    instagram_accounts = InstagramAccount.objects.all()
+    fb_accounts = FacebookAccount.objects.all()
+    twitter_accounts = TwitterAccount.objects.all()
+    phone_numbers = PhoneNumber.objects.all()
+
     if request.method == 'POST':
         form =ContactForm(request.POST)
 
@@ -72,51 +123,15 @@ def privacy_policy(request):
             return redirect('/privacy_policy/')
     else:
         form = ContactForm()
-    return render(request,'privacy_policy.htm',{'form':form})
-
-def refund_policy(request):
-    if request.method == 'POST':
-        form =ContactForm(request.POST)
-
-        if form.is_valid():
-            
-            #getting values of the form field
-            m_name = form.cleaned_data['name']
-            email_address = form.cleaned_data['email']
-            mail_message = form.cleaned_data['message']
-        
-            # saving the contacts
-            # sending an email and an sms notification
-            send_contact_email(email_address)
-            send_contact_notification(email_address, mail_message)
-            contact = Contact(name=m_name,email=email_address,message=mail_message)
-            contact.save()
-            return redirect('/refund_policy/')
-    else:
-        form = ContactForm()
-    return render(request,'refund_policy.htm',{'form':form})
-
-def terms_of_use(request):
-    if request.method == 'POST':
-        form =ContactForm(request.POST)
-
-        if form.is_valid():
-            
-            #getting values of the form field
-            m_name = form.cleaned_data['name']
-            email_address = form.cleaned_data['email']
-            mail_message = form.cleaned_data['message']
-        
-            # saving the contacts
-            # sending an email and an sms notification
-            send_contact_email(emai_address)
-            send_contact_notification(email_address, mail_message)
-            contact = Contact(name=m_name,email=email_address,message=mail_message)
-            contact.save()
-            return redirect('/terms_of_use/')
-    else:
-        form = ContactForm()
-    return render(request,'about.htm',{'form':form})
+    return render(request,'privacy_policy.htm',{
+                                       'form':form,
+                                       'addresses':addresses,
+                                       'gmail_links':gmail_links,
+                                       'instagram_accounts':instagram_accounts,
+                                       'fb_accounts':fb_accounts,
+                                       'twitter_accounts':twitter_accounts,
+                                       'phone_numbers':phone_numbers
+                                       })
 
 def create_order(request):
     if request.method == 'POST':
