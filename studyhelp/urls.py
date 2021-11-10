@@ -10,6 +10,7 @@ urlpatterns = [
     path('',views.index_page),
     path(r'about/',views.about_view),
     path(r'privacy_policy/',views.privacy_policy),
+    path(r'samples/',views.samples),
     path(r'create_order/',views.create_order),
 ]
 #appending the static files urls to the above media

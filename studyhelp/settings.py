@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'contacts',
     'page_edits',
     'jobs',
+    'services',
 ]
 
 MIDDLEWARE = [

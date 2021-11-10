@@ -1,0 +1,86 @@
+{% extends 'base_layout.htm'%}
+{% block title %} Samples - Studyhelp {%endblock%}
+{% block content %}
+<!-- Banner -->
+<section id="banner">
+    <div class="inner">
+        {%for brand in brands%}
+        <h2>{{brand.text}}</h2>
+        {%endfor%}
+        {%for header in headers%}
+        <p>{{header.text}}<a href="/create_order/" class="special">Order Now</a></p>
+        {%endfor%}
+    </div>
+</section>
+
+<section id="wrapper">
+    <section id="four" class="wrapper alt style1">
+        <div class="inner">
+            <h2 class="major">Samples</h2>
+            <section class="features">
+                {%for sample in samples%}
+                <article>
+                    <h3 class="major">{{sample.title}}</h3>
+                    <p>{{sample.snippet}}</p>
+                    <a href="{{sample.file.url}}" class="special">View Paper</a>
+                </article>
+                {%endfor%}
+            </section>
+        </div>
+    </section>  
+</section>
+{% endblock %}
+
+{% block footer %}
+    <section id="footer">
+        <div class="inner">
+            <h2 class="major">Get in touch</h2>
+            <p></p>
+            <form method="post" action="/">
+                <div class="fields">
+                    {%csrf_token%}
+                    {%for field in form%}
+                    <div class="field">
+                        <label for="{{field.id_for_label}}">{{field.id_for_label}}</label>
+                        {{field}}
+                    </div>
+                    {%endfor%}
+                </div>
+                <ul class="actions">
+                    <li><input type="submit" value="Send Message" /></li>
+                </ul>
+            </form>
+            <ul class="contact">
+                {%for address in addresses%}
+                <li class="icon solid fa-home">
+                    {{address.p_o_box}}<br />
+                    {{address.location}}<br />
+                </li>
+                {%endfor%}
+
+                {%for phone in phone_numbers%}
+                <li class="icon solid fa-phone">{{phone.phone}}</li>
+                {%endfor%}
+                
+                {%for gmail in gmail_links %}
+                <li class="icon solid fa-envelope"><a href="#">{{gmail.link}}</a></li>
+                {%endfor%}
+
+                {%for twitter in twitter_accounts%}
+                <li class="icon brands fa-twitter"><a href="{{twitter.twitter}}">{{twitter.twitter}}</a></li>
+                {%endfor%}
+
+                {%for fb in fb_accounts%}
+                <li class="icon brands fa-facebook-f"><a href="{{fb.facebook}}">{{fb.facebook}}</a></li>
+                {%endfor%}
+
+                {%for ig in instagram_accounts%}
+                <li class="icon brands fa-instagram"><a href="{{ig.ig}}">{{ig.ig}}</a></li>
+                {%endfor%}   
+            </ul>
+            <ul class="copyright">
+                <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="#">Webspace</a></li> <li><a href="/privacy_policy/">Privacy policy</a></li><li><a href="/about/">About</a></li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}

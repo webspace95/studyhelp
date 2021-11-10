@@ -17,36 +17,85 @@
 
 <!-- Wrapper -->
     <section id="wrapper">
-            <!-- Three -->
-                <section id="three" class="wrapper spotlight style3">
-                    <div class="inner">
-                        {%for text in how_we_work_texts%}
-                        <div class="content">
-                            <h2 class="major">How we work</h2>
-                            <p>
-                                {{text.body}} </p>
-                            <a href="/create_order/" class="special">Order now</a>
-                        </div>
-                        {%endfor%}
-                    </div>
+        <!-- One -->
+        <section id="one" class="wrapper spotlight style1">
+            <div class="inner">
+                {%for assignment in assignments%}
+                <div class="content">
+                    <h1>Our Services</h1>
+                    <h2 class="major">{{assignment.title}}</h2>
+                    <p>{{assignment.body}}</p>
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+        <!-- Two -->
+        <section id="two" class="wrapper alt  style2">
+            <div class="inner">
+                {%for proofreading in proofreadings%}
+                <div class="content">
+                    <h2 class="major">{{proofreading.title}}</h2>
+                    <p>{{proofreading.body}}</p>
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+        <!-- One -->
+        <section id="one" class="wrapper spotlight style1">
+            <div class="inner">
+                {%for disertation in dissertations%}
+                <div class="content">
+                    <h2 class="major">{{disertation.title}}</h2>
+                    <p>{{dissertation.body}}</p>
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+        <!-- Two -->
+        <section id="two" class="wrapper alt  style2">
+            
+            <div class="inner">
+                {%for content in contents%}
+                <div class="content">
+                    <h2 class="major">{{content.title}}</h2>
+                    <p>{{content.body}}</p>
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        <!-- Three -->
+        <section id="three" class="wrapper spotlight style3">
+            <div class="inner">
+                {%for text in how_we_work_texts%}
+                <div class="content">
+                    <h2 class="major">How we work</h2>
+                    <p>
+                        {{text.body}} </p>
+                    <a href="/create_order/" class="special">Order now</a>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+        <!-- Four -->
+        <section id="four" class="wrapper alt  style1">
+            <div class="inner">
+                <h2 class="major">Samples</h2>
+                <p>Our previous work</p>
+                <section class="features">
+                    {%for sample in samples%}
+                    <article>
+                        <h3 class="major">{{sample.title}}</h3>
+                        <p>{{sample.snippet}}</p>
+                        <a href="{{sample.file.url}}" class="special">View Paper</a>
+                    </article>
+                    {%endfor%}
                 </section>
-            <!-- Four -->
-                <section id="four" class="wrapper alt style1">
-                    <div class="inner">
-                        <h2 class="major">Samples</h2>
-                        <p>Have a look at our previous works</p>
-                        <section class="features">
-                            {%for sample in samples%}
-                            <article>
-                                <a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
-                                <h3 class="major">{{sample.title}}</h3>
-                                <p>{{sample.snippet}}</p>
-                                <a href="{{sample.file.url}}" class="special">View Paper</a>
-                            </article>
-                            {%endfor%}
-                        </section>
-                    </div>
-                </section>    
+            </div>
+        </section>    
     </section>
 {%endblock%}
 {%block footer%}
@@ -98,7 +147,7 @@
             {%endfor%}   
         </ul>
         <ul class="copyright">
-            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="#">HtoStudios</a></li> <li><a href="/privacy_policy/">Privacy policy</a></li><li><a href="/about/">About</a></li>
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="#">Webspace</a></li> <li><a href="/privacy_policy/">Privacy policy</a></li><li><a href="/about/">About</a></li>
         </ul>
     </div>
 </section>

@@ -22,7 +22,6 @@ class HomeHeader(models.Model):
 
 class HowWeWorkText(models.Model):
 
-    thumb = models.ImageField( max_length=None)
     body = models.TextField()
     date = models.DateField(auto_now_add=True)
 

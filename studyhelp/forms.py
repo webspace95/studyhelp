@@ -25,7 +25,7 @@ class OrderForm(forms.Form):
     name = forms.CharField(label='', max_length=100,widget=forms.TextInput(attrs={'name':'name','id':'name'}))
     email = forms.EmailField( label='',max_length=100 ,widget=forms.EmailInput(attrs={'name':'email','id':'email'}))
     title = forms.CharField(label='', max_length=100,widget=forms.TextInput(attrs={'name':'title','id':'title'}))
-    pages = forms.CharField(label='', max_length=100,widget=forms.TextInput(attrs={'name':'pages','id':'pages'}))
+    #pages = forms.CharField(label='', max_length=100,widget=forms.TextInput(attrs={'name':'pages','id':'pages'}))
     deadline = forms.CharField(label='', max_length=100,widget=forms.TextInput(attrs={'name':'deadline','id':'pages'}))
     type = forms.CharField(label='', max_length=100,widget=forms.TextInput(attrs={'name':'type','id':'type'}))
     format = forms.CharField(label='', max_length=100,widget=forms.TextInput(attrs={'name':'format','id':'format'}))
