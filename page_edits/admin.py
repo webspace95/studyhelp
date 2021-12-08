@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomeHeader,HowWeWorkText,BrandName,GmailLink,PhoneNumber,TwitterAccount,FacebookAccount,InstagramAccount,Address,PrivacyPolicy,RefundPolicy,AboutPage,WhatsappNumber
+from .models import HomeHeader,HowWeWorkText,BrandName,GmailLink,PhoneNumber,TwitterAccount,FacebookAccount,InstagramAccount,Address,PrivacyPolicy,RefundPolicy,AboutPage,WhatsappNumber,HowWeWorkCheckListItem
 # Register your models here.
 
 admin.site.register(HomeHeader)
@@ -15,4 +15,5 @@ admin.site.register(PrivacyPolicy)
 admin.site.register(RefundPolicy)
 admin.site.register(AboutPage)
 admin.site.register(WhatsappNumber)
+admin.site.register(HowWeWorkCheckListItem)
 

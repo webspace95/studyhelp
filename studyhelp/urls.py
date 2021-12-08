@@ -7,11 +7,13 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     path('',views.index_page),
     path(r'about/',views.about_view),
     path(r'privacy_policy/',views.privacy_policy),
     path(r'samples/',views.samples),
     path(r'create_order/',views.create_order),
+    path(r'dashboard/',views.dashboard),
 ]
 #appending the static files urls to the above media
 urlpatterns += staticfiles_urlpatterns()

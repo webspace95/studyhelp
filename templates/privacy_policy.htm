@@ -1,24 +1,32 @@
 {%extends 'base_layout.htm'%}
 {%load static%}
-{% block title %}Privacy policy - Study Help{% endblock %}
+{% block title %}
+    Study help - {% for title in privacy_title %} {{title.title_description}} {% endfor %}
+{% endblock %}
+{% block extra_head %}
+{% for meta in privacy_meta %}
+<meta name="description" content="{{meta.description}}"/>
+<meta name="keywords" content="{{meta.keywords}}"/>
+{% endfor %}
+{% endblock %}
 {%block content%}
 <!-- Wrapper -->
 <section id="wrapper">
+
     <header>
         <div class="inner">
+            <div class="logo"><span class="icon fa-gem"></span></div>
             <h2>Studyhelp privacy policy</h2>
         </div>
     </header>
     <!-- Content -->
         <div class="wrapper">
             <div class="inner">
+                {% for policy in privacy_policies %}
                 <p>
-                    We respect everyone’s privacy, hence we never ever share any of your personal details with any third parties. We consider this as our fundamental duty to safeguard your credentials like name, email ID, payment details, contact number, transaction details, etc. Whether you are browsing through the DoAssignmentHelp website or making any payment with us, everything happens under a secured ecosystem. Our policy and procedures have been robustly designed which prevents any information from leaking to anyone else. Here are the pointers that we strongly follow in DoAssignmentHelp.
-
-                    All your transactions with DoAssignmentHelp are done safely
-                    We never disclose student’s information to anyone.
-                    We never disclose assignment writers' information to anyone.
+                    {{policy.body}}
                 </p>
+                {% endfor %}
             </div>
         </div>
 </section>
@@ -60,19 +68,28 @@
             {%endfor%}
 
             {%for twitter in twitter_accounts%}
-            <li class="icon brands fa-twitter"><a href="{{twitter.twitter}}">{{twitter.twitter}}</a></li>
+            <li class="icon brands fa-twitter"><a href="https://www.{{twitter.twitter}}">{{twitter.twitter}}</a></li>
             {%endfor%}
 
             {%for fb in fb_accounts%}
-            <li class="icon brands fa-facebook-f"><a href="{{fb.facebook}}">{{fb.facebook}}</a></li>
+            <li class="icon brands fa-facebook-f"><a href="https://www.{{fb.facebook}}">{{fb.facebook}}</a></li>
             {%endfor%}
 
             {%for ig in instagram_accounts%}
-            <li class="icon brands fa-instagram"><a href="{{ig.ig}}">{{ig.ig}}</a></li>
+            <li class="icon brands fa-instagram"><a href="https://www.{{ig.ig}}">{{ig.ig}}</a></li>
             {%endfor%}   
+
+            {%for number in whatsapp%}
+            <li class="icon brands fa-whatsapp"><a href="https://api.whatsapp.com/send?phone={{number.number}}">{{number.number}}</a></li>
+            {%endfor%}
         </ul>
         <ul class="copyright">
-            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="#">Webspace</a></li> <li><a href="/privacy_policy/">Privacy policy</a></li><li><a href="/about/">About</a></li>
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li> 
+            <li><a href="/privacy_policy/">Privacy policy</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
         </ul>
     </div>
 </section>

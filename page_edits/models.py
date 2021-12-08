@@ -102,9 +102,7 @@ class Address(models.Model):
 class PrivacyPolicy(models.Model):
 
     name = models.CharField(max_length=50, default="privacy policy")
-    heading = models.CharField( max_length=50)
-    sub_heading = models.CharField( max_length=50)
-    body = models.TextField()
+    body = models.TextField(default="")
     
     save_one_only('PrivacyPolicy')
 
@@ -138,10 +136,17 @@ class AboutPage(models.Model):
     
 class WhatsappNumber(models.Model):
     
-    name = models.CharField(max_length=50,name="whatsapp")
+    name = models.CharField(max_length=50,default="whatsapp")
     number = models.CharField(max_length=50)
 
     save_one_only('WhatsappNumber')
 
     def __str__(self):
         return self.name
+
+class HowWeWorkCheckListItem(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+

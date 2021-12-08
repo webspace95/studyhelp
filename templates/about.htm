@@ -1,14 +1,21 @@
 {%extends 'base_layout.htm'%}
 {%load static%}
 {% block title %}Study help - About{% endblock %}
+{% block extra_head %}
+{% for meta in about_meta %}
+<meta name="description" content="{{meta.description}}"/>
+<meta name="keywords" content="{{meta.keywords}}"/>
+{% endfor %}
+{% endblock %}
 {%block content%}
 <!-- Wrapper -->
     <section id="wrapper">
         {%for about in abouts%}
         <header>
             <div class="inner">
+                <div class="logo"><span class="icon fa-gem"></span></div>
                 <h2>{{about.heading}}</h2>
-                <p>{{about.summary}}</p>
+                <p>{{about.summary}}<a href="/create_order/" class="special">Order Now</a></p>
             </div>
         </header>
 
@@ -58,19 +65,29 @@
             {%endfor%}
 
             {%for twitter in twitter_accounts%}
-            <li class="icon brands fa-twitter"><a href="{{twitter.twitter}}">{{twitter.twitter}}</a></li>
+            <li class="icon brands fa-twitter"><a href="https://www.{{twitter.twitter}}">{{twitter.twitter}}</a></li>
             {%endfor%}
 
             {%for fb in fb_accounts%}
-            <li class="icon brands fa-facebook-f"><a href="{{fb.facebook}}">{{fb.facebook}}</a></li>
+            <li class="icon brands fa-facebook-f"><a href="https://www.{{fb.facebook}}">{{fb.facebook}}</a></li>
             {%endfor%}
 
             {%for ig in instagram_accounts%}
-            <li class="icon brands fa-instagram"><a href="{{ig.ig}}">{{ig.ig}}</a></li>
+            <li class="icon brands fa-instagram"><a href="https://www.{{ig.ig}}">{{ig.ig}}</a></li>
             {%endfor%}   
+
+            {%for number in whatsapp%}
+            <li class="icon brands fa-whatsapp"><a href="https://api.whatsapp.com/send?phone={{number.number}}">{{number.number}}</a></li>
+            {%endfor%}
+
         </ul>
         <ul class="copyright">
-            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li><li>Design: <a href="#">Web Space</a></li> <li><a href="/privacy_policy/">Privacy policy</a></li><li><a href="/about/">About</a></li>
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li> 
+            <li><a href="/privacy_policy/">Privacy policy</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
         </ul>
     </div>
 </section>
