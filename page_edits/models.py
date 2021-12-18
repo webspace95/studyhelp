@@ -10,6 +10,7 @@ def save_one_only(model_name):
             raise ValidationError('There is can be only one '+model_name+' instance')
         return super(model_name, self).save(*args, **kwargs)
 
+
 class HomeHeader(models.Model):
 
     text = models.TextField()

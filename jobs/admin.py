@@ -6,4 +6,5 @@ from .models import Order, Sample
 admin.site.register(Order)
 admin.site.register(Sample)
 
+
 admin.site.site_header = "Studyhelp Admin"

@@ -1,16 +1,21 @@
 from django.shortcuts import render,redirect
-from .forms import ContactForm, OrderForm
+from .forms import ContactForm
+from order_form_edits.forms import OrderForm
 from django.conf import settings
 from contacts.models import Contact, UserProfile,Whatsapp
 from jobs.models import Order, Sample
+from order_form_edits.models import Page,AcademicLevel,Spacing,Format,Subject,Day,Type
 from seo.models import AboutMetaField,AboutTitleField,SampleMetaField,SampleTitleField,IndexMetaField,IndexTitleField,PrivacypolicyMetaField,PrivacypolicyTitleField,OrderMetaField,OrderTitleField,DashboardMetaField,DashboardTitleField
 from page_edits.models import HomeHeader,HowWeWorkCheckListItem,HowWeWorkText,BrandName,Address,GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PrivacyPolicy,PhoneNumber,AboutPage
+from order_form_edits.forms import ACADEMIC_CHOICES,SPACING_CHOICES,SUBJECT_CHOICES,TYPE_CHOICES,FORMAT_CHOICES,DAY_CHOICES,PAGE_CHOICES
 from django.contrib import messages
 from services.models import AssignmentWritingService, DissertationAndThesisHelp, ProofReadingService, ContentWritingService
+import random
+import string
 
 
 def create_ref_code():
-    return 'ODR'.join(random.choices(string.ascii_lowercase + string.digits, k=7))
+    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 def index_page(request):
 
@@ -225,7 +230,7 @@ def create_order(request):
         'steps':steps,
         'whatsapp':whatsapp,
         'order_title':order_title,
-        'order_meta':order_meta
+        'order_meta':order_meta,
     }
 
     if request.method == 'POST':
@@ -234,39 +239,42 @@ def create_order(request):
         if form.is_valid():
             m_name = form.cleaned_data['name']
             m_email = form.cleaned_data['email']
-            m_academiclevel = form.cleaned_data['academiclevel'].option.value
-            m_subject = form.cleaned_data['subject'].option.value
-            m_pages = form.cleaned_data['pages'].option.value
-            m_days = form.cleaned_data['days'].option.value
-            m_type = form.cleaned_data['type'].option.value
-            m_format = form.cleaned_data['format'].option.value
+
+            m_academiclevel = form.cleaned_data['academiclevel']
+            m_subject = form.cleaned_data['subject']
+            m_pages = form.cleaned_data['pages']
+            m_days = form.cleaned_data['days']
+            m_spacing = form.cleaned_data['linespacing']
+            m_type = form.cleaned_data['type']
+            m_format = form.cleaned_data['format']
+
             m_instructions = form.cleaned_data['instructions']
 
             #refrence code and status
+            
             m_status='IP'
             ref_code = create_ref_code()
 
-            try:
-                order = Order(name=m_name,
-                              email=m_email,
-                              academic_level=m_academiclevel,
-                              subject=m_subject,
-                              number_of_pages=m_pages,
-                              days=m_days,
-                              type=m_type,
-                              paper_format=m_format,
-                              instructions=m_instructions,
-                              status=m_status,
-                              user=request.user,
-                              reference_code=ref_code)
-                print(order)
-                order.save()
-                return redirect('/create_order/')
-            except Exception as e:
-                print("an error occured. yoww dumbbb")
-                return redirect('/create_order/')
+            order = Order(name=m_name,
+                            email=m_email,
+                            academic_level=m_academiclevel[0],
+                            subject=m_subject[0],
+                            number_of_pages=m_pages[0],
+                            days=m_days[0],
+                            type=m_type[0],
+                            line_spacing=m_spacing[0],
+                            paper_format=m_format[0],
+                            instructions=m_instructions,
+                            status=m_status,
+                            user=request.user,
+                            reference_code=ref_code)
+            order.save()
+            
+            messages.success(request,'Your order was created succesfully')
+            messages.success(request,'Please copy the reference code and send it to our official whatsapp number for more communication')
+            return redirect('/dashboard/')
         else:
-            print("an error occured")
+            messages.warning(request,'Please enter all te required fields')
             return redirect('/create_order/')
     else:
         form = OrderForm()
@@ -342,8 +350,8 @@ def dashboard(request):
     fb_accounts = FacebookAccount.objects.all()
     twitter_accounts = TwitterAccount.objects.all()
     phone_numbers = PhoneNumber.objects.all()
-    completed_orders = Order.objects.filter(user=request.user,status='Completed')
-    current_orders = Order.objects.filter(user=request.user,status='inprogress')
+    completed_orders = Order.objects.filter(user=request.user,status='CP').order_by('-date_created')
+    current_orders = Order.objects.filter(user=request.user,status='IP').order_by('-date_created')
     whatsapp = Whatsapp.objects.all()
     dashboard_title = DashboardTitleField.objects.all()
     dashboard_meta = DashboardMetaField.objects.all()

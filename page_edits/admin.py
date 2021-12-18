@@ -17,3 +17,15 @@ admin.site.register(AboutPage)
 admin.site.register(WhatsappNumber)
 admin.site.register(HowWeWorkCheckListItem)
 
+'''
+At launch we will activate this code
+from django.contrib import admin
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
+
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    readonly_fields = [
+        'date_joined',
+    ]
+'''

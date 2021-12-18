@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'jobs',
     'services',
     'seo',
+    'order_form_edits',
 
     #allauth
     'django.contrib.sites',

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from order_form_edits.forms import ACADEMIC_CHOICES,SPACING_CHOICES,SUBJECT_CHOICES,TYPE_CHOICES,FORMAT_CHOICES,DAY_CHOICES,PAGE_CHOICES
 
 STATUS_CHOICES = (
     ('IP', 'inprogress'),
@@ -12,12 +13,13 @@ class Order(models.Model):
     #meta
     name = models.CharField( max_length=50)
     email = models.EmailField( max_length=254)
-    academic_level = models.CharField( max_length=50)
-    subject = models.CharField(max_length=50)
-    number_of_pages = models.CharField(max_length=50)
-    days = models.CharField(max_length=50)
-    type = models.CharField( max_length=50)
-    paper_format = models.CharField( max_length=50)
+    academic_level = models.CharField(choices=ACADEMIC_CHOICES,max_length=2, blank=True, null=True)
+    subject = models.CharField(choices=SUBJECT_CHOICES,max_length=2, blank=True, null=True)
+    number_of_pages = models.CharField(choices=PAGE_CHOICES,max_length=2, blank=True, null=True)
+    line_spacing = models.CharField(choices=SPACING_CHOICES,max_length=2, blank=True, null=True)
+    days = models.CharField(choices=DAY_CHOICES, max_length=2, blank=True, null=True)
+    type = models.CharField(choices=TYPE_CHOICES,max_length=2, blank=True, null=True)
+    paper_format = models.CharField(choices=FORMAT_CHOICES, max_length=2, blank=True, null=True)
     instructions = models.TextField(default="")
  
     #order status
@@ -33,7 +35,7 @@ class Order(models.Model):
     reference_code = models.CharField(max_length=50,blank=True,null=True)
 
     def __str__(self):
-        return self.name
+        return self.reference_code
 
 
 class Sample(models.Model):

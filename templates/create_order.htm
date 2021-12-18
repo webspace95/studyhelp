@@ -67,51 +67,67 @@
                 <div class="col-12">
                     <label for="academiclevel">Academic Level</label>
                     <select name="academiclevel" id="academiclevel">
-                        {% for value, name in form.fields.academiclevel.choices %}
-                            <option value="{{ value }}"> {{ name }}</option>
+                        <option selected disabled="true" value="Select Academic level">Select Academic level</option>
+                        {% for  value, name in form.fields.academiclevel.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col-12">
                     <label for="subject">Subject</label>
                     <select name="subject" id="subject">
-                        {% for value, name in form.fields.subject.choices %}
-                            <option value="{{ value }}"> {{ name }}</option>
+                        <option selected disabled="true" value="Select subject">Select subject</option>
+                        {% for  value, name in form.fields.subject.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col-12">
-                    <label for="subject">Pages</label>
+                    <label for="pages">Pages</label>
                     <select name="pages" id="pages">
-                        {% for value, name in form.fields.pages.choices %}
-                            <option value="{{ value }}"> {{ name }}</option>
+                        <option selected disabled="true" value="Select Pages">Select pages</option>
+                        {% for  value, name in form.fields.pages.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="Line Spacing">Line Spacing</label>
+                    <select name="linespacing" id="linespacing">
+                        <option selected disabled="true" value="Select Line Spacing">Select Line Spacing</option>
+                        {% for value ,name in form.fields.linespacing.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col-12">
                     <label for="days">Days</label>
                     <select name="days" id="days">
-                        {% for value, name in form.fields.days.choices %}
-                            <option value="{{ value }}"> {{ name }}</option>
+                        <option selected disabled="true" value="Select Days">Select Days</option>
+                        {% for  value, name in form.fields.days.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col-12">
                     <label for="type">Type</label>
                     <select name="type" id="type">
-                        {% for value, name in form.fields.type.choices %}
-                            <option value="{{ value }}"> {{ name }}</option>
+                        <option selected disabled="true" value="Select Type">Select Type</option>
+                        {% for  value, name in form.fields.type.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col-12">
                     <label for="format">Format</label>
                     <select name="format" id="format">
-                        {% for value, name in form.fields.format.choices %}
-                            <option value="{{ value }}"> {{ name }}</option>
+                        <option selected disabled="true" value="Select Format">Select Format </option>
+                        {% for  value, name in form.fields.format.choices %}
+                            <option value="{{ value }}" id="{{ value }}"> {{ name }}</option>
                         {% endfor %}
                     </select>
                 </div>
+                
                 <div class="col-12">
                     <label for="instructions">Instructions</label>
                     <textarea name="instructions" id="instructions" rows="6"></textarea>
