@@ -43,6 +43,7 @@
                                     <th>Date</th>
                                     <th>Reference code</th>
                                     <th>Subject</th>
+                                    <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,6 +57,7 @@
                                     <td>{{order.date_created}}</td>
                                     <td>{{order.reference_code}}</td>
                                     <td>{{order.get_subject_display}}</td>
+                                    <td><a href="/order_description/{{order.reference_code}}/" class="special"></a></td>
                                 </tr>
                                 {% endfor %}
                                 {% endif %}
@@ -78,6 +80,7 @@
                                     <th>Date</th>
                                     <th>Reference code</th>
                                     <th>Subject</th>
+                                    <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -91,6 +94,7 @@
                                     <td>{{order.date_created}}</td>
                                     <td>{{order.reference_code}}</td>
                                     <td>{{order.get_subject_display}}</td>
+                                    <td><a href="/order_description/{{order.reference_code}}/" class="special"></a></td>
                                 </tr>
                                 {% endfor %}
                                 {% endif %}

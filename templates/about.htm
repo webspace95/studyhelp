@@ -1,6 +1,7 @@
 {%extends 'base_layout.htm'%}
 {%load static%}
-{% block title %}Study help - About{% endblock %}
+{% block title %}Study help - {% for title in about_title %} {{title.title_description}} {% endfor %}
+{% endblock %}
 {% block extra_head %}
 {% for meta in about_meta %}
 <meta name="description" content="{{meta.description}}"/>

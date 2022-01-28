@@ -58,11 +58,11 @@
                 {%csrf_token%}
                 <div class="col-6 col-12-xsmall">
                     <label for="name">Name</label>
-                    <input type="text" name="name" id="name" value="" />
+                    <input type="text" name="name" id="name" value={{user.username}} />
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" value="" />
+                    <input type="email" name="email" id="email" value={{user.email}} />
                 </div>
                 <div class="col-12">
                     <label for="academiclevel">Academic Level</label>
@@ -130,7 +130,7 @@
                 
                 <div class="col-12">
                     <label for="instructions">Instructions</label>
-                    <textarea name="instructions" id="instructions" rows="6"></textarea>
+                    <textarea name="instructions" id="instructions" rows="6" placeholder="Paste your instructions here..."></textarea>
                 </div>
                 <div class="col-12">
                     <ul class="actions">

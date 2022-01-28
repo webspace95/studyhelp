@@ -9,7 +9,12 @@ STATUS_CHOICES = (
 )
 
 # Create your models here.
+
 class Order(models.Model):
+
+    #refrence code
+    reference_code = models.CharField(max_length=50,blank=True,null=True)
+    
     #meta
     name = models.CharField( max_length=50)
     email = models.EmailField( max_length=254)
@@ -21,18 +26,24 @@ class Order(models.Model):
     type = models.CharField(choices=TYPE_CHOICES,max_length=2, blank=True, null=True)
     paper_format = models.CharField(choices=FORMAT_CHOICES, max_length=2, blank=True, null=True)
     instructions = models.TextField(default="")
- 
+
+    #assignment file
+    assignment_file = models.FileField( max_length=100, blank=True, null=True)
+
+    #price field
+    price = models.FloatField(blank=True,null=True)
+
     #order status
     status = models.CharField(choices=STATUS_CHOICES,max_length=2,blank=True,null=True)
 
-    #date ields
+    #date fields
     date_created = models.DateTimeField(auto_now_add=True)
 
     #user field
     user = models.ForeignKey(settings.AUTH_USER_MODEL,  on_delete=models.CASCADE, blank=True,null=True)
 
-    #refrence code
-    reference_code = models.CharField(max_length=50,blank=True,null=True)
+    #boolean fields
+    payment_complete = models.BooleanField(blank=True,null=True)
 
     def __str__(self):
         return self.reference_code
@@ -53,3 +64,4 @@ class Sample(models.Model):
 
     def snippet(self):
         return self.description[:50]
+

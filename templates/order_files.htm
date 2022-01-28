@@ -1,0 +1,81 @@
+{%extends 'base_layout.htm'%}
+{%load static%}
+{% block title %}
+    Study help - {% for title in order_title %} {{title.title_description}} {% endfor %}
+{% endblock %}
+{% block extra_head %}
+{% for meta in order_meta %}
+<meta name="description" content="{{meta.description}}"/>
+<meta name="keywords" content="{{meta.keywords}}"/>
+{% endfor %}
+{% endblock %}
+{%block content%}
+    <section id="banner">
+        <div class="inner">
+            <div class="logo"><span class="icon fa-gem"></span></div>
+            {%for brand in brands%}
+            <h2>{{brand.text}}</h2>
+            <h2>Add files</h2>
+            {%endfor%}
+            {%for header in headers%}
+            <p>{{header.text}}<a href="/create_order/" class="special">Order Now</a></p>
+            {%endfor%}
+            <p>
+                <div class="col-6 col-12-medium">
+                    <ul>
+                        {%for step in steps%}
+                        <li>{{step.name}}</li>
+                        {%endfor%}
+                    </ul>
+                </div>
+            </p>
+        </div>
+    </section>
+    <!-- Wrapper -->
+    <section id="wrapper">
+        <!-- Three -->
+        <section id="three" class="wrapper spotlight style3">
+            <div class="inner">
+                {%for text in how_we_work_texts%}
+                <div class="content">
+                    <h2 class="major">How we work</h2>
+                    <p>
+                        {{text.body}} </p>
+                    <a href="/create_order/" class="special">Order now</a>
+                </div>
+                {%endfor%}
+            </div>
+        </section>    
+    </section>
+{%endblock%}
+
+{%block footer%}
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Add files</h2>
+        <p></p>
+        <form method="post" action="/order_files/">
+            <div class="row gtr-uniform">
+                {%csrf_token%}
+                <div class="col-12">
+                    <input type="file" multiple id="add_files" name="add_files">
+                    <label for="add_files">Choose files</label>
+                </div>
+                <div class="col-12">
+                    <ul class="actions">
+                        <li><input type="submit" value="Submit" class="primary" /></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li> 
+            <li><a href="/privacy_policy/">Privacy policy</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}

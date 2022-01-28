@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from .forms import ContactForm
 from order_form_edits.forms import OrderForm
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from contacts.models import Contact, UserProfile,Whatsapp
 from jobs.models import Order, Sample
 from order_form_edits.models import Page,AcademicLevel,Spacing,Format,Subject,Day,Type
@@ -12,7 +14,37 @@ from django.contrib import messages
 from services.models import AssignmentWritingService, DissertationAndThesisHelp, ProofReadingService, ContentWritingService
 import random
 import string
+import smtplib
 
+GMAIL_USER = 'studyhelp312@gmail.com'
+GMAIL_PASSWORD = '$6085hto'
+SENT_FROM = 'studyhelp312@gmil.com'
+TO = ['studyhelp312@gmail.com']
+
+
+
+class SendMail:
+    def __init__(self,gmail_user,gmail_password,email_text,sent_from,to,subject,body):
+        self.gmail_user = gmail_user
+        self.gmail_password = gmail_password
+
+        self.email_text = email_text
+
+        self.sent_from = sent_from
+        self.to = to
+        self.subject = subject
+        self.body = body
+
+    def send_mail(self):
+        try:
+            smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+            smtp_server.ehlo()
+            smtp_server.login(self.gmail_user, self.gmail_password)
+            smtp_server.sendmail(self.sent_from, self.to, self.email_text)
+            smtp_server.close()
+            print ("Email sent successfully!")
+        except Exception as ex:
+            print ("Something went wrong….",ex)
 
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
@@ -202,6 +234,9 @@ def privacy_policy(request):
         })
     return render(request,'privacy_policy.htm',context)
 
+
+
+@login_required()
 def create_order(request):
     headers = HomeHeader.objects.all().order_by('date')
     brands = BrandName.objects.all()
@@ -216,6 +251,7 @@ def create_order(request):
     whatsapp = Whatsapp.objects.all()
     order_title = OrderTitleField.objects.all()
     order_meta = OrderMetaField.objects.all()
+    user = request.user
 
     context = {
         'headers':headers,
@@ -231,6 +267,7 @@ def create_order(request):
         'whatsapp':whatsapp,
         'order_title':order_title,
         'order_meta':order_meta,
+        'user':user,
     }
 
     if request.method == 'POST':
@@ -250,10 +287,16 @@ def create_order(request):
 
             m_instructions = form.cleaned_data['instructions']
 
+
             #refrence code and status
             
             m_status='IP'
             ref_code = create_ref_code()
+            ref_code = ref_code.upper()
+
+            # grabs the gmail link from the page edits 
+            # sends email notification to it
+            # subject == ref_code && body == instructions
 
             order = Order(name=m_name,
                             email=m_email,
@@ -269,9 +312,22 @@ def create_order(request):
                             user=request.user,
                             reference_code=ref_code)
             order.save()
-            
+
+            #add functionality to send email here
+            SUBJECT = order.reference_code
+            BODY = order.instructions
+            EMAIL_TEXT = """\
+            From: %s
+            To: %s
+            Subject: %s
+
+            %s
+            """ % (SENT_FROM, ", ".join(TO), SUBJECT, BODY)
+            my_mail = SendMail(GMAIL_USER, GMAIL_PASSWORD, EMAIL_TEXT, SENT_FROM, TO, SUBJECT, BODY)
+            my_mail.send_mail()
+
             messages.success(request,'Your order was created succesfully')
-            messages.success(request,'Please copy the reference code and send it to our official whatsapp number for more communication')
+            messages.success(request,'Please copy the reference code and send it to our official email address or whatsapp number for more communication')
             return redirect('/dashboard/')
         else:
             messages.warning(request,'Please enter all te required fields')
@@ -341,6 +397,7 @@ def samples(request):
         })
     return render(request,"samples.htm",context)
 
+@login_required()
 def dashboard(request):
     headers = HomeHeader.objects.all().order_by('date')
     brands = BrandName.objects.all()
@@ -399,3 +456,63 @@ def dashboard(request):
             'form':form
         })
     return render(request,'dashboard.htm',context)
+
+@login_required()
+def order_description(request,slug):
+    order = Order.objects.get(reference_code=slug)
+    headers = HomeHeader.objects.all().order_by('date')
+    brands = BrandName.objects.all()
+    whatsapp = Whatsapp.objects.all()
+    addresses = Address.objects.all()
+    gmail_links = GmailLink.objects.all()
+    instagram_accounts = InstagramAccount.objects.all()
+    fb_accounts = FacebookAccount.objects.all()
+    twitter_accounts = TwitterAccount.objects.all()
+    phone_numbers = PhoneNumber.objects.all()
+    dashboard_title = DashboardTitleField.objects.all()
+    dashboard_meta = DashboardMetaField.objects.all()
+
+
+    context = {
+            'order':order,
+            'headers':headers,
+            'brands':brands,
+            'whatsapp':whatsapp,
+            'phone_numbers':phone_numbers,
+            'gmail_links':gmail_links,
+            'instagram_accounts':instagram_accounts,
+            'fb_accounts':fb_accounts,
+            'twitter_accounts':twitter_accounts,
+            'addresses':addresses,
+            'dashboard_title':dashboard_title,
+            'dashboard_meta':dashboard_meta
+        }
+    if request.method == 'POST':
+        form =ContactForm(request.POST)
+        if form.is_valid():
+            
+            #getting values of the form field
+            m_name = form.cleaned_data['name']
+            email_address = form.cleaned_data['email']
+            mail_message = form.cleaned_data['message']
+        
+            try:
+                contact = Contact(name=m_name,email=email_address,message=mail_message)
+                contact.save()
+                messages.success(request,"Message sent succesfully.")
+                return redirect('/order_description/'+order.reference_code+'/')
+
+            except Exception as e:
+                messages.warning(request,"Please enter all the required fields")
+                return redirect('/order_description/'+order.reference_code+'/')
+        else:
+            messages.warning(request,"Plese complete all the required fields")
+            return redirect('/order_description/'+order.reference_code+'/')
+    else:
+        form = ContactForm()
+        context.update({
+            'form':form
+        })
+    return render(request,"order_description.htm",context)
+
+

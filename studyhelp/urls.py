@@ -14,6 +14,7 @@ urlpatterns = [
     path(r'samples/',views.samples),
     path(r'create_order/',views.create_order),
     path(r'dashboard/',views.dashboard),
+    path(r'order_description/<slug>/',views.order_description),
 ]
 #appending the static files urls to the above media
 urlpatterns += staticfiles_urlpatterns()
