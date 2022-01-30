@@ -85,18 +85,25 @@
                     <tbody>
                         <tr>
                             <td>{{order.date_created}}</td>
-                            <td>{{order.price}}</td>
+                            {% if order.price %}
+                            <td>$ {{order.price}}</td>
+                            {% else %}
+                            <td>Price will be updated once you agree with your writter</td>
+                            {% endif %}
                         </tr>
                     </tbody>
                 </table>
             </div>
             <ul class="actions fit">
-                {% if order.status == 'CP'%}
+                {% if order.status == 'CP' and order.assignment_file %}
                 <li><a href="/dashboard/" class="button fit">Back</a></li>
-                <!--if paid? button remains like this. else button redirects you to the checkout view
-                After payment you will be redirected back here
-                we will have to create a get absolute url button fo this-->
+                {% if order.payment_complete %}
                 <li><a href="{{order.assignment_file.url}}" class="button primary fit">Download Assignment</a></li>
+                {% else %}
+
+                <!-- This will redirect to the payment view -->
+                <li><a href="/dashboard/" class="button primary fit">Download Assignment</a></li>
+                {% endif %}
                 {% else %}
                 <li><a href="/dashboard/" class="button fit">Back</a></li>
                 {% endif %}
@@ -154,7 +161,7 @@
                 {%endfor%}   
 
                 {%for number in whatsapp%}
-                <li class="icon brands fa-whatsapp"><a href="https://api.whatsapp.com/send?phone={{number.number}}">{{number.number}}</a></li>
+                <li class="icon brands fa-whatsapp">+<a href="https://api.whatsapp.com/send?phone={{number.number}}">{{number.number}}</a></li>
                 {%endfor%}
             </ul>
             <ul class="copyright">

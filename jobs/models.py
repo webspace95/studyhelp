@@ -7,6 +7,10 @@ STATUS_CHOICES = (
     ('CP', 'Completed'),
     ('CN', 'Cancelled'),
 )
+PAYMENT_COMPLETE_CHOICES = (
+    ('T', 'True'),
+    ('F', 'False'),
+)
 
 # Create your models here.
 
@@ -43,7 +47,7 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,  on_delete=models.CASCADE, blank=True,null=True)
 
     #boolean fields
-    payment_complete = models.BooleanField(blank=True,null=True)
+    payment_complete = models.CharField(max_length=1,choices=PAYMENT_COMPLETE_CHOICES,blank=True,null=True,default="F")
 
     def __str__(self):
         return self.reference_code

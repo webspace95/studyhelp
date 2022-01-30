@@ -328,6 +328,7 @@ def create_order(request):
 
             messages.success(request,'Your order was created succesfully')
             messages.success(request,'Please copy the reference code and send it to our official email address or whatsapp number for more communication')
+            messages.success(request,'You can acces our Whatsapp account through the floating button below')
             return redirect('/dashboard/')
         else:
             messages.warning(request,'Please enter all te required fields')
