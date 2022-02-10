@@ -23,7 +23,8 @@ class HomeHeader(models.Model):
 
 class HowWeWorkText(models.Model):
 
-    body = models.TextField()
+    introduction = models.TextField()
+    body = models.TextField(blank=True,null=True)
     date = models.DateField(auto_now_add=True)
 
     save_one_only('HowWeWorkText')
