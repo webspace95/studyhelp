@@ -8,9 +8,10 @@ from contacts.models import Contact, UserProfile,Whatsapp
 from jobs.models import Order, Sample
 from order_form_edits.models import Page,AcademicLevel,Spacing,Format,Subject,Day,Type
 from seo.models import AboutMetaField,AboutTitleField,SampleMetaField,SampleTitleField,IndexMetaField,IndexTitleField,PrivacypolicyMetaField,PrivacypolicyTitleField,OrderMetaField,OrderTitleField,DashboardMetaField,DashboardTitleField
-from page_edits.models import HomeHeader,HowWeWorkCheckListItem,HowWeWorkText,BrandName,Address,GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PrivacyPolicy,PhoneNumber,AboutPage
+from page_edits.models import HomeHeader,HowWeWorkCheckListItem,HowWeWorkText,BrandName,Address,GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PhoneNumber,AboutPage
 from order_form_edits.forms import ACADEMIC_CHOICES,SPACING_CHOICES,SUBJECT_CHOICES,TYPE_CHOICES,FORMAT_CHOICES,DAY_CHOICES,PAGE_CHOICES
 from django.contrib import messages
+from privacy_policy.models import Section
 from services.models import AssignmentWritingService, DissertationAndThesisHelp, ProofReadingService, ContentWritingService
 import random
 import string
@@ -177,64 +178,6 @@ def about_view(request):
             'form':form
         })
     return render(request,'about.htm',context)
-
-def privacy_policy(request):
-
-    addresses = Address.objects.all()
-    gmail_links = GmailLink.objects.all()
-    instagram_accounts = InstagramAccount.objects.all()
-    fb_accounts = FacebookAccount.objects.all()
-    twitter_accounts = TwitterAccount.objects.all()
-    phone_numbers = PhoneNumber.objects.all()
-    privacy_policies = PrivacyPolicy.objects.all()
-    whatsapp = Whatsapp.objects.all()
-
-    privacy_title = PrivacypolicyTitleField.objects.all()
-    privacy_meta = PrivacypolicyMetaField.objects.all()
-
-
-    context = {
-            'addresses':addresses,
-            'gmail_links':gmail_links,
-            'instagram_accounts':instagram_accounts,
-            'fb_accounts':fb_accounts,
-            'twitter_accounts':twitter_accounts,
-            'phone_numbers':phone_numbers,
-            'privacy_policies':privacy_policies,
-            'whatsapp':whatsapp,
-            'privacy_title':privacy_title,
-            'privacy_meta':privacy_meta
-            }
-
-    if request.method == 'POST':
-        form =ContactForm(request.POST)
-        if form.is_valid():
-            
-            #getting values of the form field
-            m_name = form.cleaned_data['name']
-            email_address = form.cleaned_data['email']
-            mail_message = form.cleaned_data['message']
-        
-            try:
-                contact = Contact(name=m_name,email=email_address,message=mail_message)
-                contact.save()
-                messages.success(request,"Message sent succesfully.")
-                return redirect('/privacy_policy/')
-
-            except Exception as e:
-                messages.warning(request,"Please enter all the required fields")
-                return redirect('/privacy_policy/')
-        else:
-            messages.warning(request,"Plese complete all the required fields")
-            return redirect('/privacy_policy/')
-    else:
-        form = ContactForm()
-        context.update({
-            'form':form
-        })
-    return render(request,'privacy_policy.htm',context)
-
-
 
 @login_required()
 def create_order(request):
@@ -516,4 +459,62 @@ def order_description(request,slug):
         })
     return render(request,"order_description.htm",context)
 
+
+def privacy_policy(request):
+    samples = Sample.objects.all()
+    addresses = Address.objects.all()
+    gmail_links = GmailLink.objects.all()
+    instagram_accounts = InstagramAccount.objects.all()
+    fb_accounts = FacebookAccount.objects.all()
+    twitter_accounts = TwitterAccount.objects.all()
+    phone_numbers = PhoneNumber.objects.all()
+    abouts = AboutPage.objects.all()
+    whatsapp = Whatsapp.objects.all()
+    sections = Section.objects.all()
+
+    about_title = AboutTitleField.objects.all()
+    about_meta = AboutMetaField.objects.all()
+
+    context = {
+                'sections':sections,
+                'samples':samples,
+                'addresses':addresses,
+                'gmail_links':gmail_links,
+                'instagram_accounts':instagram_accounts,
+                'fb_accounts':fb_accounts,
+                'twitter_accounts':twitter_accounts,
+                'phone_numbers':phone_numbers,
+                'abouts':abouts,
+                'whatsapp':whatsapp,
+                'about_title':about_title,
+                'about_meta':about_meta
+              }
+
+    if request.method == 'POST':
+        form =ContactForm(request.POST)
+        if form.is_valid():
+            
+            #getting values of the form field
+            m_name = form.cleaned_data['name']
+            email_address = form.cleaned_data['email']
+            mail_message = form.cleaned_data['message']
+        
+            try:
+                contact = Contact(name=m_name,email=email_address,message=mail_message)
+                contact.save()
+                messages.success(request,"Message sent succesfully.")
+                return redirect('/privacy_policy/')
+
+            except Exception as e:
+                messages.warning(request,"Please enter all the required fields")
+                return redirect('/privacy_policy/')
+        else:
+            messages.warning(request,"Plese complete all the required fields")
+            return redirect('/privacy_policy/')
+    else:
+        form = ContactForm()
+        context.update({
+            'form':form
+        })
+    return render(request,'privacy_policy.htm',context)
 

@@ -10,9 +10,9 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('',views.index_page),
     path(r'about/',views.about_view),
-    path(r'privacy_policy/',views.privacy_policy),
     path(r'samples/',views.samples),
     path(r'create_order/',views.create_order),
+    path(r'privacy_policy/',views.privacy_policy),
     path(r'dashboard/',views.dashboard),
     path(r'order_description/<slug>/',views.order_description),
 ]

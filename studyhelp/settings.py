@@ -33,6 +33,9 @@ INSTALLED_APPS = [
     'services',
     'seo',
     'order_form_edits',
+    'how_we_work',
+    'privacy_policy',
+    'refund_policy',
 
     #allauth
     'django.contrib.sites',

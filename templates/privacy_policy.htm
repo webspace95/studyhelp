@@ -10,25 +10,29 @@
 {% endfor %}
 {% endblock %}
 {%block content%}
+{%for number in whatsapp%}
+<a href="https://api.whatsapp.com/send?phone={{number.number}}" class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>
+{% endfor %}
+
 <!-- Wrapper -->
 <section id="wrapper">
-
     <header>
         <div class="inner">
-            <div class="logo"><span class="icon fa-gem"></span></div>
-            <h2>Studyhelp privacy policy</h2>
+            <h2>Privacy Policy</h2>
+            <p>Your privacy is critically important to us</p>
         </div>
     </header>
     <!-- Content -->
-        <div class="wrapper">
-            <div class="inner">
-                {% for policy in privacy_policies %}
-                <p>
-                    {{policy.body}}
-                </p>
-                {% endfor %}
+    <div class="wrapper">
+        <div class="inner">
+            {% for section in sections %}
+            <h3 class="major">{{section.heading}}</h3>
+            <p>{{section.body}}</p>
             </div>
-        </div>
+            {%endfor%}
+    </div>
 </section>
 {%endblock%}
 

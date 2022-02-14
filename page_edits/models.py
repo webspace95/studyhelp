@@ -26,11 +26,12 @@ class HowWeWorkText(models.Model):
     introduction = models.TextField()
     body = models.TextField(blank=True,null=True)
     date = models.DateField(auto_now_add=True)
+    thumbnail = models.FileField(blank=True,null=True)
 
     save_one_only('HowWeWorkText')
 
     def __str__(self):
-        return self.body[:50]
+        return self.introduction[:50]
 
 
 
@@ -101,27 +102,6 @@ class Address(models.Model):
     def __str__(self):
         return self.p_o_box
 
-class PrivacyPolicy(models.Model):
-
-    name = models.CharField(max_length=50, default="privacy policy")
-    body = models.TextField(default="")
-    
-    save_one_only('PrivacyPolicy')
-
-    def __str__(self):
-        return self.name
-    
-class RefundPolicy(models.Model):
-    
-    name = models.CharField(max_length=50, default="refund policy")
-    heading = models.CharField( max_length=50)
-    sub_heading = models.CharField( max_length=50)
-    body = models.TextField()
-    
-    save_one_only('RefundPolicy')
-
-    def __str__(self):
-        return self.name
 
 class AboutPage(models.Model):
 
