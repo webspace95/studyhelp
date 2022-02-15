@@ -1,10 +1,12 @@
+
 {%extends 'base_layout.htm'%}
 {%load static%}
+
 {% block title %}
-    Study help - {% for title in dashboard_title %} {{title.title_description}} {% endfor %}
+    Revision policy &mdash; Studyhelp
 {% endblock %}
 {% block extra_head %}
-{% for meta in dashboard_meta %}
+{% for meta in index_meta %}
 <meta name="description" content="{{meta.description}}"/>
 <meta name="keywords" content="{{meta.keywords}}"/>
 {% endfor %}
@@ -22,7 +24,7 @@
     <div class="inner">
         <div class="logo"><span class="icon fa-gem"></span></div>
         {%for brand in brands%}
-        <h2>{{brand.text}}</h2>
+        <h2>{{brand.text}} Privacy policy</h2>
         {%endfor%}
         {%for header in headers%}
         <p>{{header.text}}<a href="/create_order/" class="special">Order Now</a></p>
@@ -30,88 +32,66 @@
     </div>
 </section>
 <!-- Wrapper -->
+    <section id="wrapper">
         <!-- One -->
         <section id="one" class="wrapper spotlight style1">
             <div class="inner">
+                {%for intro in introductions%}
                 <div class="content">
-                    <h1>My Orders</h1>
-                    <h2 class="major">Current orders</h2>
-                    <div class="table-wrapper">
-                        <table class="alt">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Reference code</th>
-                                    <th>Subject</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if not current_orders %}
-                                <tr>
-                                    <td colspan="5" style="text-align: center;">You do not have any current orders</td>
-                                </tr>
-                                {% else %}
-                                {% for order in current_orders %}
-                                <tr>
-                                    <td>{{order.date_created}}</td>
-                                    <td>{{order.reference_code}}</td>
-                                    <td>{{order.get_subject_display}}</td>
-                                    <td><a href="/order_description/{{order.reference_code}}/" class="special"></a></td>
-                                </tr>
-                                {% endfor %}
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <a href="/create_order/" class="special">Create Order</a>
+                    <h2>Privacy Policy</h2>
+                    <p>{{intro.body}}</p>
                 </div>
+                {%endfor%}
             </div>
         </section>
         <!-- Two -->
         <section id="two" class="wrapper alt  style2">
             <div class="inner">
+                {%for instruction in instructions%}
                 <div class="content">
-                    <h2 class="major">Completed orders</h2>
-                    <div class="table-wrapper">
-                        <table class="alt">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Reference code</th>
-                                    <th>Subject</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if not completed_orders %}
-                                <tr>
-                                    <td colspan="5" style="text-align: center;">You do not have any completed orders</td>
-                                </tr>
-                                {% else %}
-                                {% for order in completed_orders %}
-                                <tr>
-                                    <td>{{order.date_created}}</td>
-                                    <td>{{order.reference_code}}</td>
-                                    <td>{{order.get_subject_display}}</td>
-                                    <td><a href="/order_description/{{order.reference_code}}/" class="special"></a></td>
-                                </tr>
-                                {% endfor %}
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <a href="/create_order/" class="special">Create Order</a>
+                    <h2 class="major">{{instruction.heading}}</h2>
+                    <p>{{instruction.body}}</p>
                 </div>
+                {%endfor%}
             </div>
         </section>
+        <!-- One -->
+        <section id="one" class="wrapper spotlight style1">
+            <div class="inner">
+                {%for sub in submissions%}
+                <div class="content">
+                    <h2 class="major">{{sub.heading}}</h2>
+                    <p>{{sub.body}}</p>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+        <!-- Two -->
+        <section id="two" class="wrapper alt  style2">
+            
+            <div class="inner">
+                {%for deadline in deadlines%}
+                <div class="content">
+                    <h2 class="major">{{deadline.heading}}</h2>
+                    <p>{{deadline.body}}</p>
+                </div>
+                {% endfor %}
+                <br/>
+                {%for text in conclusions%}
+                <div class="content">
+                    <p>{{text.body}} </p>
+                    <a href="/create_order/" class="special">Order Now</a>
+                </div>
+                {%endfor%}
+            </div>
+        </section>   
     </section>
 {%endblock%}
 {%block footer%}
+
 <section id="footer">
     <div class="inner">
         <h2 class="major">Get in touch</h2>
-        <p></p>
         <form method="post" action="/">
             <div class="fields">
                 {%csrf_token%}
@@ -169,3 +149,7 @@
     </div>
 </section>
 {%endblock%}
+
+
+
+Fill in the Order form detailing your requirements and specifications. Verify whether you have filled out the details properly and submit the form. Once your order has been approved, you will receive a confirmation and you are good to go. You can now log on to the dashboard page and you will find a reference code to your order. Copy the code and text it to our official WhatsApp number and our support team will review the order instructions and assign it to a qualified expert to help you with your assignment. Use the code to track your order's progress, additional instructions and price negotiations.

@@ -12,8 +12,8 @@ urlpatterns = [
     path(r'about/',views.about_view),
     path(r'samples/',views.samples),
     path(r'create_order/',views.create_order),
-    path(r'privacy_policy/',views.privacy_policy),
     path(r'dashboard/',views.dashboard),
+    path(r'revision_policy/',views.revision_policy),
     path(r'order_description/<slug>/',views.order_description),
 ]
 #appending the static files urls to the above media
