@@ -116,19 +116,6 @@ class AboutPage(models.Model):
     def __str__(self):
         return self.name
     
-class WhatsappNumber(models.Model):
-    
-    name = models.CharField(max_length=50,default="whatsapp")
-    number = models.CharField(max_length=50)
 
-    save_one_only('WhatsappNumber')
 
-    def __str__(self):
-        return self.name
-
-class HowWeWorkCheckListItem(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
 

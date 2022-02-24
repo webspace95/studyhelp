@@ -21,17 +21,16 @@ class HowWeWork(models.Model):
     def __str__(self):
         return self.introduction[:50]
 
-class Faq(models.Model):
-
-    question = models.CharField(max_length=256)
-    answer = models.TextField()
-
-    def __str__(self):
-        return self.question
-
 class HowWeWorkCheckList(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.name
+        return self.name   
+
+class Faq(models.Model):
+    question = models.CharField( max_length=256)
+    answer = models.TextField()
+
+    def __str__(self):
+        return self.question
     
