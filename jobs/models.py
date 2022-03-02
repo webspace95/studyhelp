@@ -21,6 +21,12 @@ class Writer(models.Model):
     def __str__(self):
         return self.name
 
+class OrderFile(models.Model):
+    file = models.FileField(blank=True, null=True)
+
+    def __str__(self):
+        return self.id
+
 class Order(models.Model):
 
     #refrence code
@@ -56,6 +62,9 @@ class Order(models.Model):
     #boolean fields
     payment_complete = models.CharField(max_length=1,choices=PAYMENT_COMPLETE_CHOICES,blank=True,null=True,default="F")
     writer =  models.ForeignKey(Writer,  on_delete=models.CASCADE, blank=True,null=True)
+
+    #file field
+    order_files = models.ManyToManyField(OrderFile, blank=True)
 
     def __str__(self):
         return self.reference_code

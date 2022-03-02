@@ -5,13 +5,13 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from contacts.models import Contact, UserProfile,Whatsapp
-from jobs.models import Order, Sample
+from jobs.models import Order, Sample, OrderFile
 from how_we_work.models import HowWeWork, HowWeWorkCheckList, Faq
 from refund_policy.models import RefundPolicyIntroduction, OrderCancelation, DoubleCharge, ShortageOfWriter, RevisionDeadline, Quality
 from revision_policy.models import Instruction, Introduction, Conclusion, Submission, Deadline
 from order_form_edits.models import Page,AcademicLevel,Spacing,Format,Subject,Day,Type
 from seo.models import AboutMetaField,AboutTitleField,SampleMetaField,SampleTitleField,IndexMetaField,IndexTitleField,PrivacypolicyMetaField,PrivacypolicyTitleField,OrderMetaField,OrderTitleField,DashboardMetaField,DashboardTitleField
-from page_edits.models import HomeHeader,HowWeWorkText,BrandName,Address,GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PhoneNumber,AboutPage
+from page_edits.models import HomeHeader,BrandName,Address,GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PhoneNumber,AboutPage
 from order_form_edits.forms import ACADEMIC_CHOICES,SPACING_CHOICES,SUBJECT_CHOICES,TYPE_CHOICES,FORMAT_CHOICES,DAY_CHOICES,PAGE_CHOICES
 from django.contrib import messages
 from services.models import AssignmentWritingService, DissertationAndThesisHelp, ProofReadingService, ContentWritingService

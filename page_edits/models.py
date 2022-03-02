@@ -21,20 +21,6 @@ class HomeHeader(models.Model):
     def __str__(self):
         return self.text
 
-class HowWeWorkText(models.Model):
-
-    introduction = models.TextField()
-    body = models.TextField(blank=True,null=True)
-    date = models.DateField(auto_now_add=True)
-    thumbnail = models.FileField(blank=True,null=True)
-
-    save_one_only('HowWeWorkText')
-
-    def __str__(self):
-        return self.introduction[:50]
-
-
-
 class BrandName(models.Model):
 
     text = models.CharField(max_length=20)

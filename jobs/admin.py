@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, Sample, Writer
+from .models import Order, Sample, Writer, OrderFile
 from django.contrib.auth.models import Group
 
 # Register your models here.
@@ -10,6 +10,6 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(Order,OrderAdmin)
 admin.site.register(Sample)
 admin.site.register(Writer)
-
+admin.site.register(OrderFile)
 
 admin.site.site_header = "Studyhelp Admin"
