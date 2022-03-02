@@ -462,6 +462,62 @@ def order_description(request,slug):
         })
     return render(request,"order_description.htm",context)
 
+@login_required()
+def order_files(reqest,slug):
+    addresses = Address.objects.all()
+    gmail_links = GmailLink.objects.all()
+    instagram_accounts = InstagramAccount.objects.all()
+    fb_accounts = FacebookAccount.objects.all()
+    twitter_accounts = TwitterAccount.objects.all()
+    phone_numbers = PhoneNumber.objects.all()
+    whatsapp = Whatsapp.objects.all()
+    index_title = IndexTitleField.objects.all()
+    index_meta = IndexMetaField.objects.all()
+    brands = BrandName.objects.all()
+    headers = HomeHeader.objects.all().order_by('date')
+    
+    context = {
+                'addresses':addresses,
+                'gmail_links':gmail_links,
+                'instagram_accounts':instagram_accounts,
+                'fb_accounts':fb_accounts,
+                'twitter_accounts':twitter_accounts,
+                'phone_numbers':phone_numbers,
+                'whatsapp':whatsapp,
+                'index_title':index_title,
+                'index_meta':index_meta,
+                'brands':brands,
+                'headers':headers,
+              }
+
+    if request.method == 'POST':
+        form =ContactForm(request.POST)
+        if form.is_valid():
+            
+            #getting values of the form field
+            m_name = form.cleaned_data['name']
+            email_address = form.cleaned_data['email']
+            mail_message = form.cleaned_data['message']
+        
+            try:
+                contact = Contact(name=m_name,email=email_address,message=mail_message)
+                contact.save()
+                messages.success(request,"Message sent succesfully.")
+                return redirect('/order_files/'+order.reference_code+'/')
+
+            except Exception as e:
+                messages.warning(request,"Please enter all the required fields")
+                return redirect('/order_files/'+order.reference_code+'/')
+        else:
+            messages.warning(request,"Plese complete all the required fields")
+            return redirect('/order_files/'+order.reference_code+'/')
+    else:
+        form = ContactForm()
+        context.update({
+            'form':form
+        })
+    return render(request,'order_files.htm',context)
+
 def revision_policy(request):
     addresses = Address.objects.all()
     gmail_links = GmailLink.objects.all()
