@@ -22,10 +22,11 @@ class Writer(models.Model):
         return self.name
 
 class OrderFile(models.Model):
-    file = models.FileField(blank=True, null=True)
+    name = models.CharField(blank=True,null=True,max_length=50)
+    file = models.FileField(max_length=100,blank=True,null=True)
 
     def __str__(self):
-        return self.id
+        return self.name
 
 class Order(models.Model):
 

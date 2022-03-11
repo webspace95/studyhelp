@@ -70,3 +70,6 @@ class OrderForm(forms.Form):
     instructions = forms.CharField( label='',widget=forms.Textarea(attrs={'rows':6,
                                                                             'place-holder':'Instructions...'
                                                                             }))
+
+class OrderFileForm(forms.Form):
+    docfile = forms.FileField(label='', max_length=100, required=False)

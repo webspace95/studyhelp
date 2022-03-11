@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .forms import ContactForm
-from order_form_edits.forms import OrderForm
+from order_form_edits.forms import OrderForm, OrderFileForm
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -463,7 +463,10 @@ def order_description(request,slug):
     return render(request,"order_description.htm",context)
 
 @login_required()
-def order_files(reqest,slug):
+def order_files(request,slug):
+    order = Order.objects.get(reference_code=slug)
+    headers = HomeHeader.objects.all().order_by('date')
+    how_we_work_texts = HowWeWork.objects.all()
     addresses = Address.objects.all()
     gmail_links = GmailLink.objects.all()
     instagram_accounts = InstagramAccount.objects.all()
@@ -471,51 +474,54 @@ def order_files(reqest,slug):
     twitter_accounts = TwitterAccount.objects.all()
     phone_numbers = PhoneNumber.objects.all()
     whatsapp = Whatsapp.objects.all()
-    index_title = IndexTitleField.objects.all()
-    index_meta = IndexMetaField.objects.all()
-    brands = BrandName.objects.all()
-    headers = HomeHeader.objects.all().order_by('date')
-    
+    order_title = OrderTitleField.objects.all()
+    order_meta = OrderMetaField.objects.all()
+    user = request.user
+
     context = {
-                'addresses':addresses,
-                'gmail_links':gmail_links,
-                'instagram_accounts':instagram_accounts,
-                'fb_accounts':fb_accounts,
-                'twitter_accounts':twitter_accounts,
-                'phone_numbers':phone_numbers,
-                'whatsapp':whatsapp,
-                'index_title':index_title,
-                'index_meta':index_meta,
-                'brands':brands,
-                'headers':headers,
-              }
+        'order':order,
+        'headers':headers,
+        'how_we_work_texts':how_we_work_texts,
+        'addresses':addresses,
+        'gmail_links':gmail_links,
+        'instagram_accounts':instagram_accounts,
+        'fb_accounts':fb_accounts,
+        'twitter_accounts':twitter_accounts,
+        'phone_numbers':phone_numbers,
+        'whatsapp':whatsapp,
+        'order_title':order_title,
+        'order_meta':order_meta,
+        'user':user,
+    }
 
     if request.method == 'POST':
-        form =ContactForm(request.POST)
-        if form.is_valid():
-            
-            #getting values of the form field
-            m_name = form.cleaned_data['name']
-            email_address = form.cleaned_data['email']
-            mail_message = form.cleaned_data['message']
-        
-            try:
-                contact = Contact(name=m_name,email=email_address,message=mail_message)
-                contact.save()
-                messages.success(request,"Message sent succesfully.")
-                return redirect('/order_files/'+order.reference_code+'/')
+        form = OrderFileForm(request.POST,request.FILES)
 
+        if form.is_valid():
+
+            doc = request.FILES #returns a dict-like object
+            m_file = doc['docfile']
+
+            try:
+                file = OrderFile(name= m_file.get_name(),file=m_file)
+                file.save()
+                order.order_files.add(file)
+                order.save()
+
+                messages.success(request,"File uploaded successfully")
+                return redirect('/order_files/'+order.reference_code+'/')
             except Exception as e:
-                messages.warning(request,"Please enter all the required fields")
+                messages.warning(request,'An error occured while uploading the file. Please try again')
+                print(e)
                 return redirect('/order_files/'+order.reference_code+'/')
         else:
-            messages.warning(request,"Plese complete all the required fields")
+            messages.warning(request,'An error occured while uploading the file. Please try again')
             return redirect('/order_files/'+order.reference_code+'/')
     else:
-        form = ContactForm()
-        context.update({
-            'form':form
-        })
+        form = OrderFileForm()
+        context.update(
+            {'form':form}
+        )
     return render(request,'order_files.htm',context)
 
 def revision_policy(request):
