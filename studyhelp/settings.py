@@ -20,14 +20,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'adminlte3',
 
     'contacts',
     'page_edits',
@@ -45,6 +44,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
+    #paypal
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +150,9 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 SITE_ID = 1
 LOGIN_REDIRECT_URL = "/dashboard/"
 
+
+PAYPAL_RECEIVER_EMAIL = 'sb-yuspm8261665@business.example.com'
+
+PAYPAL_TEST = True
+
+PAYPAL_CLIENT_ID = 'AdogpWv582h8YbAdA79Tcbjq-7pFhAua9n9aCpqAc3ZqLcFBLUgmY5sln5uUnDRX7BXhk5oDX2mfHuVe'

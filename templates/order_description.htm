@@ -96,17 +96,16 @@
             </div>
             <ul class="actions fit">
                 {% if order.status == 'CP' and order.assignment_file %}
-                <li><a href="/dashboard/" class="button fit">Back</a></li>
-                {% if order.payment_complete %}
-                <li><a href="{{order.assignment_file.url}}" class="button primary fit">Download Assignment</a></li>
-                {% else %}
-
-                <!-- This will redirect to the payment view -->
-                <li><a href="/dashboard/" class="button primary fit">Download Assignment</a></li>
-                {% endif %}
-                {% else %}
-                <li><a href="/dashboard/" class="button fit">Back</a></li>
-                <li><a href="/order_files/{{order.reference_code}}/" class="button primary fit">Add Files</a></li>
+                    {% if order.payment_complete == 'T' %}
+                    <li><a href="/dashboard/" class="button fit">Back</a></li>
+                    <li><a href="{{order.assignment_file.url}}" class="button primary fit">Download Assignment</a></li>
+                    {% else %}
+                    <li><a href="/dashboard/" class="button fit">Back</a></li>
+                    <li><a href="/checkout/{{order.reference_code}}/" class="button primary fit">Download Assignment</a></li>
+                    {% endif %}
+               {% else %}
+                    <li><a href="/dashboard/" class="button fit">Back</a></li>
+                    <li><a href="/order_files/{{order.reference_code}}/" class="button primary fit">Add Files</a></li>
                 {% endif %}
             </ul>
         </div>

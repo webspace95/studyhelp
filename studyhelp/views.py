@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .forms import ContactForm
 from order_form_edits.forms import OrderForm, OrderFileForm
 from django.conf import settings
+from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from contacts.models import Contact, UserProfile,Whatsapp
@@ -14,6 +15,7 @@ from seo.models import AboutMetaField,AboutTitleField,SampleMetaField,SampleTitl
 from page_edits.models import HomeHeader,BrandName,Address,GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PhoneNumber,AboutPage
 from order_form_edits.forms import ACADEMIC_CHOICES,SPACING_CHOICES,SUBJECT_CHOICES,TYPE_CHOICES,FORMAT_CHOICES,DAY_CHOICES,PAGE_CHOICES
 from django.contrib import messages
+from payments.models import Payment
 from services.models import AssignmentWritingService, DissertationAndThesisHelp, ProofReadingService, ContentWritingService
 import random
 import string
@@ -728,4 +730,75 @@ def how_we_work(request):
             'form':form
         })
     return render(request,'how_we_work.htm',context)
+
+#checkout view
+@login_required()
+def checkout_view(request,slug):
+    order = Order.objects.get(reference_code=slug)
+    samples = Sample.objects.all()
+    addresses = Address.objects.all()
+    gmail_links = GmailLink.objects.all()
+    instagram_accounts = InstagramAccount.objects.all()
+    fb_accounts = FacebookAccount.objects.all()
+    twitter_accounts = TwitterAccount.objects.all()
+    phone_numbers = PhoneNumber.objects.all()
+    whatsapp = Whatsapp.objects.all()
+    about_title = AboutTitleField.objects.all()
+    about_meta = AboutMetaField.objects.all()
+
+    context = {
+                'samples':samples,
+                'addresses':addresses,
+                'gmail_links':gmail_links,
+                'instagram_accounts':instagram_accounts,
+                'fb_accounts':fb_accounts,
+                'twitter_accounts':twitter_accounts,
+                'phone_numbers':phone_numbers,
+                'whatsapp':whatsapp,
+                'about_title':about_title,
+                'about_meta':about_meta,
+                'order':order,
+              }
+
+    if request.method == 'POST':
+        form =ContactForm(request.POST)
+        if form.is_valid():
+            
+            #getting values of the form field
+            m_name = form.cleaned_data['name']
+            email_address = form.cleaned_data['email']
+            mail_message = form.cleaned_data['message']
+        
+            try:
+                contact = Contact(name=m_name,email=email_address,message=mail_message)
+                contact.save()
+                messages.success(request,"Message sent succesfully.")
+                return redirect('/checkout/'+order.reference_code+'/')
+
+            except Exception as e:
+                messages.warning(request,"Please enter all the required fields")
+                return redirect('/checkout/'+order.reference_code+'/')
+        else:
+            messages.warning(request,"Plese complete all the required fields")
+            return redirect('/checkout/'+order.reference_code+'/')
+    else:
+        form = ContactForm()
+        context.update({
+            'form':form
+        })
+    return render(request,'checkout.htm',context)
+
+def paymentComplete(request):
+    body = json.loads(request.body)
+    order = Order.objects.get(reference_code=body['productId'])
+    order.payment_complete == 'T'
+    order.save()
+
+    Payment.objects.create(
+        paypal_charge_id=body['productId'],
+        user = request.user
+    )
+    
+    return JsonResponse('Payment completed!',safe=False)
+
 
