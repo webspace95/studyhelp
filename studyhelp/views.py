@@ -1,8 +1,10 @@
-from django.shortcuts import render,redirect
-from .forms import ContactForm
+from django.shortcuts import render, HttpResponse, redirect, \
+    get_object_or_404, reverse
+from .forms import ContactForm,CheckoutForm
 from order_form_edits.forms import OrderForm, OrderFileForm
 from django.conf import settings
 from django.core.mail import send_mail
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from contacts.models import Contact, UserProfile,Whatsapp
@@ -15,7 +17,8 @@ from seo.models import AboutMetaField,AboutTitleField,SampleMetaField,SampleTitl
 from page_edits.models import HomeHeader,BrandName,Address,GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PhoneNumber,AboutPage
 from order_form_edits.forms import ACADEMIC_CHOICES,SPACING_CHOICES,SUBJECT_CHOICES,TYPE_CHOICES,FORMAT_CHOICES,DAY_CHOICES,PAGE_CHOICES
 from django.contrib import messages
-from payments.models import Payment
+from payments.models import Payment, Address
+from paypal.standard.forms import PayPalPaymentsForm
 from services.models import AssignmentWritingService, DissertationAndThesisHelp, ProofReadingService, ContentWritingService
 import random
 import string
@@ -761,44 +764,68 @@ def checkout_view(request,slug):
               }
 
     if request.method == 'POST':
-        form =ContactForm(request.POST)
+        form =CheckoutForm(request.POST)
         if form.is_valid():
             
             #getting values of the form field
             m_name = form.cleaned_data['name']
             email_address = form.cleaned_data['email']
-            mail_message = form.cleaned_data['message']
+            m_postal_code = form.cleaned_data['postal_code']
+            m_address = forms.cleaned_data['address']
+            m_zip = forms.cleaned_data['zip']
         
             try:
-                contact = Contact(name=m_name,email=email_address,message=mail_message)
-                contact.save()
-                messages.success(request,"Message sent succesfully.")
-                return redirect('/checkout/'+order.reference_code+'/')
+                address = Address(name=m_name,email=email_address,postal_code=m_postal_code,address=m_address,zip=m_zip)
+                address.save()
+
+                order.address = address
+                order.save()
+                
+                request.session['order_id'] = order.id
+                return redirect('process_payment')
 
             except Exception as e:
                 messages.warning(request,"Please enter all the required fields")
+                print(e)
                 return redirect('/checkout/'+order.reference_code+'/')
         else:
             messages.warning(request,"Plese complete all the required fields")
+            print("exception occured or something")
             return redirect('/checkout/'+order.reference_code+'/')
     else:
-        form = ContactForm()
+        form = CheckoutForm()
         context.update({
             'form':form
         })
     return render(request,'checkout.htm',context)
 
-def paymentComplete(request):
-    body = json.loads(request.body)
-    order = Order.objects.get(reference_code=body['productId'])
-    order.payment_complete == 'T'
-    order.save()
+def process_payment(request):
+    order_id = request.session.get('order_id')
+    order = get_object_or_404(Order, id=order_id)
+    host = request.get_host()
 
-    Payment.objects.create(
-        paypal_charge_id=body['productId'],
-        user = request.user
-    )
-    
-    return JsonResponse('Payment completed!',safe=False)
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': '%.2f' % order.price.quantize(
+            Decimal('.01')),
+        'item_name': 'Order {}'.format(order.id),
+        'notify_url': 'http://{}{}'.format(host,
+                                           reverse('paypal-ipn')),
+        'return_url': 'http://{}{}'.format(host,
+                                           reverse('payment_done')),
+        'cancel_return': 'http://{}{}'.format(host,
+                                              reverse('payment_cancelled')),
+    }
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    return render(request, 'process_payment.htm', {'order': order, 'form': form})
+
+@csrf_exempt
+def payment_done(request):
+    return render(request, 'payment_done.htm')
+
+
+@csrf_exempt
+def payment_canceled(request):
+    return render(request, 'payment_cancelled.htm')
 
 

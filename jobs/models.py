@@ -45,6 +45,7 @@ class Order(models.Model):
     paper_format = models.CharField(choices=FORMAT_CHOICES, max_length=2, blank=True, null=True)
     instructions = models.TextField(default="")
 
+    address = models.ForeignKey("payments.Address",on_delete=models.SET_NULL,blank=True,null=True)
     #assignment file
     assignment_file = models.FileField( max_length=100, blank=True, null=True)
 
