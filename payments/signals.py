@@ -6,7 +6,7 @@ from django.dispatch import receiver
 import random
 import string
 
-def generate_paypal_id():
+def generate_charge_id():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 @receiver(valid_ipn_received)
@@ -22,4 +22,5 @@ def payment_notification(sender, **kwargs):
             order.save()
 
             # create a payment
-            payment = Payment(paypal_charge_id=generate_paypal_id(),user=order.user,amount=order.price,address=order.address)
+            payment = Payment(charge_id=generate_charge_id(),user=order.user,amount=order.price)
+            payment.save()

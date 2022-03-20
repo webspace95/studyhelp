@@ -19,10 +19,7 @@ urlpatterns = [
     path(r'order_files/<slug>/',views.order_files),
     path(r'order_description/<slug>/',views.order_description),
     path('paypal/', include('paypal.standard.ipn.urls')),
-    path('process-payment/', views.process_payment, name='process_payment'),
-    path('checkout/<slug>/',views.checkout_view),
-    path('payment-done/', views.payment_done, name='payment_done'),
-    path('payment-cancelled/', views.payment_canceled, name='payment_cancelled'),
+    path('payments/',include('payments.urls')),
 ]
 #appending the static files urls to the above media
 urlpatterns += staticfiles_urlpatterns()
