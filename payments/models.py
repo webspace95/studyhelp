@@ -8,7 +8,6 @@ class Address(models.Model):
     street_address = models.CharField(max_length=100,blank=True,null=True)
     apartment_address = models.CharField(max_length=100,blank=True,null=True)
     zip = models.CharField(max_length=100)
-    default = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

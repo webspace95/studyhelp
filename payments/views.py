@@ -8,14 +8,14 @@ from decimal import Decimal
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.models import ST_PP_COMPLETED
 from paypal.standard.ipn.signals import valid_ipn_received
-from .models import Payment
+from .models import Payment,Address
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from .forms import CheckoutForm
+from .forms import CheckoutForm, ExtPayPalPaymentsForm
 
 from django.contrib import messages
 from contacts.models import Whatsapp
-from page_edits.models import Address,GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PhoneNumber
+from page_edits.models import GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PhoneNumber
 from jobs.models import Order
 
 # Create your views here.
@@ -24,7 +24,6 @@ from jobs.models import Order
 def checkout_view(request,slug):
 
     order = Order.objects.get(reference_code=slug)
-    addresses = Address.objects.all()
     gmail_links = GmailLink.objects.all()
     instagram_accounts = InstagramAccount.objects.all()
     fb_accounts = FacebookAccount.objects.all()
@@ -33,7 +32,6 @@ def checkout_view(request,slug):
     whatsapp = Whatsapp.objects.all()
 
     context = {
-                'addresses':addresses,
                 'gmail_links':gmail_links,
                 'instagram_accounts':instagram_accounts,
                 'fb_accounts':fb_accounts,
@@ -46,16 +44,22 @@ def checkout_view(request,slug):
     if request.method == 'POST':
         form =CheckoutForm(request.POST)
         if form.is_valid():
+
+            m_billing_address = form.cleaned_data['billing_address']
+            m_billing_address2 = form.cleaned_data['billing_address2']
+            m_billing_zip = form.cleaned_data['billing_zip']
     
             try:
-                address = Address(name=m_name,email=email_address,postal_code=m_postal_code,address=m_address,zip=m_zip)
+                address = Address(
+                                  user = request.user,
+                                  street_address=m_billing_address,
+                                  apartment_address=m_billing_address2,
+                                  zip=m_billing_zip)
                 address.save()
-
-                order.address = address
-                order.save()
-                
+                messages.success(request,"Billing address saved succesfully")
                 request.session['order_id'] = order.id
-                return redirect('/payments/process-payment/')
+                print(request.session['order_id'])
+                return redirect('process_payment')
 
             except Exception as e:
                 messages.warning(request,"Please enter all the required fields")
@@ -80,8 +84,7 @@ def process_payment(request):
 
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
-        'amount': '%.2f' % order.price.quantize(
-            Decimal('.01')),
+        'amount': '%.2f' % order.price,
         'item_name': 'Order {}'.format(order.id),
         'notify_url': 'http://{}{}'.format(host,
                                            reverse('paypal-ipn')),
@@ -90,7 +93,8 @@ def process_payment(request):
         'cancel_return': 'http://{}{}'.format(host,
                                               reverse('payment_cancelled')),
     }
-    form = PayPalPaymentsForm(initial=paypal_dict)
+    form = PayPalPaymentsForm()
+    #PayPalPaymentsForm(initial=paypal_dict)
     return render(request, 'payments/process_payment.htm', {'order': order, 'form': form})
 
 @csrf_exempt

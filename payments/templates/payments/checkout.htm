@@ -1,8 +1,10 @@
+
+
 {%extends 'base_layout.htm'%}
 {%load static%}
 
 {% block title %}
-   Checkout &mdash; Studyhelp
+    Study help &mdash; Checkout
 {% endblock %}
 
 {%block content%}
@@ -10,7 +12,6 @@
         <div class="inner">
             <div class="logo"><span class="icon fa-gem"></span></div>
             <h2>Checkout</h2>
-            <p>complete payment first for you to download your order</p>
         </div>
     </section>
 {%endblock%}
@@ -18,30 +19,22 @@
 {%block footer%}
 <section id="footer">
     <div class="inner">
-        <h2 class="major">Checkout Form</h2>
-        <p>Enter your shipping address</p>
-        <form method="post" action="/checkout/{{order.reference_code}}/">
+        <h2 class="major">Billing Address</h2>
+        <p></p>
+        <form method="post" action="/payments/checkout/{{order.reference_code}}/">
             <div class="row gtr-uniform">
                 {%csrf_token%}
-                <div class="col-6 col-12-xsmall">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name" value={{user.username}} />
-                </div>
-                <div class="col-6 col-12-xsmall">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" value={{user.email}} />
-                </div>
-                <div class="col-6 col-12-xsmall">
-                    <label for="postal_code">Postal Code</label>
-                    <input type="text" name="Postal_code" id="Postal_code"/>
-                </div>
-                <div class="col-6 col-12-xsmall">
-                    <label for="address">Address</label>
-                    <input type="text" name="address" id="address"/>
+                <div class="col-12">
+                    <label for="billing_address">Address</label>
+                    <input type="text" id="billing_address" name="billing_address" placeholder="1234 Main St">
                 </div>
                 <div class="col-12">
-                    <label for="subject">Zip</label>
-                    <input type="text" name="zip" id="zip"/>
+                    <label for="billing_address2">Address 2 (Optional)</label>
+                    <input type="text" id="billing_address2" name="billing_address2" placeholder="Apartment or suite">
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <label for="billing_zip">Zip code</label>
+                    <input type="text" name="billing_zip" id="billing_zip" placeholder="Billing Zip"/>
                 </div>
                 <div class="col-12">
                     <ul class="actions">
