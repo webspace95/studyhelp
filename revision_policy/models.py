@@ -11,6 +11,7 @@ def save_one_only(model_name):
 
 # Create your models here.
 class Introduction(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50,default="Introduction")
     body = models.TextField()
 
@@ -20,6 +21,7 @@ class Introduction(models.Model):
         return self.name
 
 class Instruction(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50,default="Instruction")
 
     heading = models.CharField(max_length=50)
@@ -31,6 +33,7 @@ class Instruction(models.Model):
         return self.name
 
 class Submission(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50,default="Submission")
 
     heading = models.CharField( max_length=50)
@@ -42,6 +45,7 @@ class Submission(models.Model):
         return self.name
 
 class Deadline(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50,default="Deadline")
 
     heading = models.CharField( max_length=50)
@@ -53,6 +57,7 @@ class Deadline(models.Model):
         return self.name
 
 class Conclusion(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50,default="Conclusion")
     body = models.TextField()
 

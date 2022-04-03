@@ -5,13 +5,10 @@ from django.contrib import messages
 
 from django.conf import settings
 from decimal import Decimal
-from paypal.standard.forms import PayPalPaymentsForm
-from paypal.standard.models import ST_PP_COMPLETED
-from paypal.standard.ipn.signals import valid_ipn_received
 from .models import Payment,Address
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from .forms import CheckoutForm, ExtPayPalPaymentsForm
+from .forms import CheckoutForm
 
 from django.contrib import messages
 from contacts.models import Whatsapp
@@ -56,10 +53,9 @@ def checkout_view(request,slug):
                                   apartment_address=m_billing_address2,
                                   zip=m_billing_zip)
                 address.save()
+
                 messages.success(request,"Billing address saved succesfully")
-                request.session['order_id'] = order.id
-                print(request.session['order_id'])
-                return redirect('process_payment')
+                return redirect('/payments/checkout/'+order.reference_code+'/')
 
             except Exception as e:
                 messages.warning(request,"Please enter all the required fields")
@@ -77,31 +73,3 @@ def checkout_view(request,slug):
     return render(request,'payments/checkout.htm',context)
 
 
-def process_payment(request):
-    order_id = request.session.get('order_id')
-    order = get_object_or_404(Order, id=order_id)
-    host = request.get_host()
-
-    paypal_dict = {
-        'business': settings.PAYPAL_RECEIVER_EMAIL,
-        'amount': '%.2f' % order.price,
-        'item_name': 'Order {}'.format(order.id),
-        'notify_url': 'http://{}{}'.format(host,
-                                           reverse('paypal-ipn')),
-        'return_url': 'http://{}{}'.format(host,
-                                           reverse('payment_done')),
-        'cancel_return': 'http://{}{}'.format(host,
-                                              reverse('payment_cancelled')),
-    }
-    form = PayPalPaymentsForm()
-    #PayPalPaymentsForm(initial=paypal_dict)
-    return render(request, 'payments/process_payment.htm', {'order': order, 'form': form})
-
-@csrf_exempt
-def payment_done(request):
-    return render(request, 'payments/payment_done.htm')
-
-
-@csrf_exempt
-def payment_canceled(request):
-    return render(request, 'payments/payment_cancelled.htm')

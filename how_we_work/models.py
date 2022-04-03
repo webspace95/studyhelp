@@ -10,7 +10,7 @@ def save_one_only(model_name):
 
 # Create your models here.
 class HowWeWork(models.Model):
-    
+    id = models.AutoField(primary_key=True)
     introduction = models.TextField()
     body = models.TextField(blank=True,null=True)
     date = models.DateField(auto_now_add=True)
@@ -22,12 +22,14 @@ class HowWeWork(models.Model):
         return self.introduction[:50]
 
 class HowWeWorkCheckList(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name   
 
 class Faq(models.Model):
+    id = models.AutoField(primary_key=True)
     question = models.CharField( max_length=256)
     answer = models.TextField()
 

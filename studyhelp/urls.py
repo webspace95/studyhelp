@@ -18,7 +18,6 @@ urlpatterns = [
     path(r'how_we_work/',views.how_we_work),
     path(r'order_files/<slug>/',views.order_files),
     path(r'order_description/<slug>/',views.order_description),
-    path('paypal/', include('paypal.standard.ipn.urls')),
     path('payments/',include('payments.urls')),
 ]
 #appending the static files urls to the above media

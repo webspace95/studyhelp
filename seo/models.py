@@ -13,6 +13,7 @@ def save_one_only(model_name):
 # title fields
 # about
 class AboutTitleField(models.Model):
+    id = models.AutoField(primary_key=True)
     title_description = models.CharField( max_length=100)
 
     save_one_only("AboutTitleField")
@@ -22,6 +23,7 @@ class AboutTitleField(models.Model):
     
 # create order
 class OrderTitleField(models.Model):
+    id = models.AutoField(primary_key=True)
     title_description = models.CharField( max_length=100)
 
     save_one_only("OrderTitleField")
@@ -31,6 +33,7 @@ class OrderTitleField(models.Model):
 
 # dashboard
 class DashboardTitleField(models.Model):
+    id = models.AutoField(primary_key=True)
     title_description = models.CharField( max_length=100)
 
     save_one_only("DashboardTitleField")
@@ -40,6 +43,7 @@ class DashboardTitleField(models.Model):
 
 # index
 class IndexTitleField(models.Model):
+    id = models.AutoField(primary_key=True)
     title_description = models.CharField( max_length=100)
 
     save_one_only("IndexTitleField")
@@ -49,6 +53,7 @@ class IndexTitleField(models.Model):
 
 # privacy_policy
 class PrivacypolicyTitleField(models.Model):
+    id = models.AutoField(primary_key=True)
     title_description = models.CharField( max_length=100)
 
     save_one_only("PrivacypolicyTitleField")
@@ -58,6 +63,7 @@ class PrivacypolicyTitleField(models.Model):
 
 # samples
 class SampleTitleField(models.Model):
+    id = models.AutoField(primary_key=True)
     title_description = models.CharField( max_length=100)
 
     save_one_only("SampleTitleField")
@@ -68,6 +74,7 @@ class SampleTitleField(models.Model):
 # Meta fields 
 # about
 class AboutMetaField(models.Model):
+    id = models.AutoField(primary_key=True)
     description = models.TextField()
     keywords = models.TextField()
 
@@ -79,6 +86,7 @@ class AboutMetaField(models.Model):
 
 # create order
 class OrderMetaField(models.Model):
+    id = models.AutoField(primary_key=True)
     description = models.TextField()
     keywords = models.TextField()
 
@@ -90,6 +98,7 @@ class OrderMetaField(models.Model):
 
 # dashboard
 class DashboardMetaField(models.Model):
+    id = models.AutoField(primary_key=True)
     description = models.TextField()
     keywords = models.TextField()
 
@@ -100,6 +109,7 @@ class DashboardMetaField(models.Model):
 
 # index
 class IndexMetaField(models.Model):
+    id = models.AutoField(primary_key=True)
     description = models.TextField()
     keywords = models.TextField()
 
@@ -110,6 +120,7 @@ class IndexMetaField(models.Model):
 
 # privacy policy
 class PrivacypolicyMetaField(models.Model):
+    id = models.AutoField(primary_key=True)
     description = models.TextField()
     keywords = models.TextField()
 
@@ -119,6 +130,7 @@ class PrivacypolicyMetaField(models.Model):
         return self.description
 # samples
 class SampleMetaField(models.Model):
+    id = models.AutoField(primary_key=True)
     description = models.TextField()
     keywords = models.TextField()
 

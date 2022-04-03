@@ -1,6 +1,5 @@
 from django import forms
 from django.forms import MultipleChoiceField, ChoiceField
-from paypal.standard.forms import PayPalPaymentsForm
 
 class CheckoutForm(forms.Form):
     billing_address = forms.CharField(required=False)

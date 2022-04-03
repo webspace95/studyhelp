@@ -14,7 +14,7 @@ PAYMENT_COMPLETE_CHOICES = (
 
 # Create your models here.
 class Writer(models.Model):
-
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50,blank=True,null=True)
     phone = models.CharField(max_length=50,blank=True,null=True)
 
@@ -22,6 +22,7 @@ class Writer(models.Model):
         return self.name
 
 class OrderFile(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(blank=True,null=True,max_length=50)
     file = models.FileField(max_length=100,blank=True,null=True)
 
@@ -29,7 +30,7 @@ class OrderFile(models.Model):
         return self.name
 
 class Order(models.Model):
-
+    id = models.AutoField(primary_key=True)
     #refrence code
     reference_code = models.CharField(max_length=50,blank=True,null=True)
     
@@ -71,7 +72,7 @@ class Order(models.Model):
 
 
 class Sample(models.Model):
-    
+    id = models.AutoField(primary_key=True)
     title = models.CharField( max_length=50)
     description = models.TextField(blank=True)
     no_of_pages = models.IntegerField(blank=True,null=True)
