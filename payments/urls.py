@@ -4,4 +4,5 @@ from .import views
 
 urlpatterns = [
     path('checkout/<slug>/',views.checkout_view),
+    path('payment/<slug>/',views.payment_view),
 ]

@@ -55,7 +55,7 @@ def checkout_view(request,slug):
                 address.save()
 
                 messages.success(request,"Billing address saved succesfully")
-                return redirect('/payments/checkout/'+order.reference_code+'/')
+                return redirect('/payments/payment/'+order.reference_code+'/')
 
             except Exception as e:
                 messages.warning(request,"Please enter all the required fields")
@@ -72,4 +72,24 @@ def checkout_view(request,slug):
         })
     return render(request,'payments/checkout.htm',context)
 
+@login_required()
+def payment_view(request,slug):
+    order = Order.objects.get(reference_code=slug)
+    gmail_links = GmailLink.objects.all()
+    instagram_accounts = InstagramAccount.objects.all()
+    fb_accounts = FacebookAccount.objects.all()
+    twitter_accounts = TwitterAccount.objects.all()
+    phone_numbers = PhoneNumber.objects.all()
+    whatsapp = Whatsapp.objects.all()
+
+    context = {
+                'gmail_links':gmail_links,
+                'instagram_accounts':instagram_accounts,
+                'fb_accounts':fb_accounts,
+                'twitter_accounts':twitter_accounts,
+                'phone_numbers':phone_numbers,
+                'whatsapp':whatsapp,
+                'order':order,
+              }
+    return render(request,'payments/payment.htm',context)
 
