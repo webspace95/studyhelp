@@ -158,3 +158,6 @@ PAYPAL_CLIENT_ID = 'AdogpWv582h8YbAdA79Tcbjq-7pFhAua9n9aCpqAc3ZqLcFBLUgmY5sln5uU
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+#  Add configuration for static files storage using whitenoise
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
