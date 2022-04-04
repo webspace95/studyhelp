@@ -504,9 +504,9 @@ def order_files(request,slug):
 
             doc = request.FILES #returns a dict-like object
             m_file = doc['docfile']
-
+            m_file_name = "File:"+order.reference_code+""
             try:
-                file = OrderFile(name= m_file.get_name(),file=m_file)
+                file = OrderFile(name= order.reference_code,file=m_file)
                 file.save()
                 order.order_files.add(file)
                 order.save()
