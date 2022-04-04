@@ -4,10 +4,7 @@ from django.contrib.auth.models import Group
 
 # Register your models here.
 
-class OrderAdmin(admin.ModelAdmin):
-	list_filter = ("writer",)
-
-admin.site.register(Order,OrderAdmin)
+admin.site.register(Order)
 admin.site.register(Sample)
 admin.site.register(Writer)
 admin.site.register(OrderFile)
