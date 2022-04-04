@@ -155,3 +155,6 @@ PAYPAL_TEST = True
 
 PAYPAL_CLIENT_ID = 'AdogpWv582h8YbAdA79Tcbjq-7pFhAua9n9aCpqAc3ZqLcFBLUgmY5sln5uUnDRX7BXhk5oDX2mfHuVe'
 '''
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
