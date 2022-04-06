@@ -15,7 +15,7 @@ SECRET_KEY = ')s@gc4pqkyjtgw2^^d&l%$s+w4f^9r^345r&qkjbtx9+8e9)%t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['studyhelpapp.herokuapp.com','*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -164,6 +164,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #  Add configuration for static files storage using whitenoise
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Heroku db
-prod_db  =  dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
