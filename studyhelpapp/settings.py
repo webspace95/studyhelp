@@ -15,7 +15,8 @@ SECRET_KEY = ')s@gc4pqkyjtgw2^^d&l%$s+w4f^9r^345r&qkjbtx9+8e9)%t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['studyhelpapp.herokuapp.com','*']
+ALLOWED_HOSTS = [  'localhost',
+  '127.0.0.1','*']
 
 
 # Application definition
@@ -90,24 +91,13 @@ WSGI_APPLICATION = 'studyhelpapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-else:
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'studyhelpapp',
-        'USER': 'harry',
-        'PASSWORD': '$6085hto',
-        'HOST': 'localhost',
-        'PORT': '',
-        }
-    }
+
 
 
 # Password validation
