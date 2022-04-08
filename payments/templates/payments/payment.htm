@@ -1,16 +1,20 @@
 
-
 {%extends 'base_layout.htm'%}
 {%load static%}
+
 
 {% block title %}
     Study help &mdash; Payment
 {% endblock %}
 
-{%block content%}
 
+{%block content%}
+    <h4>Pay with PayPal</h4>
+    {{ form.render }}
 {%endblock%}
+
 
 {%block footer%}
 
 {%endblock%}
+

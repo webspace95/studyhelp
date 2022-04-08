@@ -9,6 +9,7 @@ from .models import Payment,Address
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from .forms import CheckoutForm
+from paypal.standard.forms import PayPalPaymentsForm
 
 from django.contrib import messages
 from contacts.models import Whatsapp
@@ -75,12 +76,31 @@ def checkout_view(request,slug):
 @login_required()
 def payment_view(request,slug):
     order = Order.objects.get(reference_code=slug)
+    order_id = request.session.get('order_id')
+    host = request.get_host()
+
     gmail_links = GmailLink.objects.all()
     instagram_accounts = InstagramAccount.objects.all()
     fb_accounts = FacebookAccount.objects.all()
     twitter_accounts = TwitterAccount.objects.all()
     phone_numbers = PhoneNumber.objects.all()
     whatsapp = Whatsapp.objects.all()
+
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': '%.2f' % order.price,
+        'item_name': 'Order {}'.format(order.reference_code),
+        'invoice': str(order.reference_code),
+        'currency_code': 'USD',
+        'notify_url': 'http://{}{}'.format(host,
+                                           reverse('paypal-ipn')),
+        'return_url': 'http://{}{}'.format(host,
+                                           reverse('payment_done')),
+        'cancel_return': 'http://{}{}'.format(host,
+                                              reverse('payment_cancelled')),
+    }
+
+    form = PayPalPaymentsForm(initial=paypal_dict)
 
     context = {
                 'gmail_links':gmail_links,
@@ -90,6 +110,17 @@ def payment_view(request,slug):
                 'phone_numbers':phone_numbers,
                 'whatsapp':whatsapp,
                 'order':order,
+                'form':form,
               }
     return render(request,'payments/payment.htm',context)
 
+
+
+@csrf_exempt
+def payment_done(request):
+    return render(request, 'payments/payment_done.htm')
+
+
+@csrf_exempt
+def payment_canceled(request):
+    return render(request, 'payments/payment_cancelled.htm')
