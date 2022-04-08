@@ -12,7 +12,7 @@ def payment_notification(sender, **kwargs):
     ipn = sender
     if ipn.payment_status == 'Completed':
         # payment was successful
-        order = get_object_or_404(Order, id=ipn.invoice)
+        order = get_object_or_404(Order, reference_code=ipn.invoice)
 
         if order.price == ipn.mc_gross:
             # mark the order as paid
@@ -34,7 +34,7 @@ def payment_notification_two(sender, **kwargs):
     ipn = sender
     if ipn.payment_status == 'Completed':
         # payment was successful
-        order = get_object_or_404(Order, id=ipn.invoice)
+        order = get_object_or_404(Order, reference_code=ipn.invoice)
 
         if order.price == ipn.mc_gross:
             # mark the order as paid
