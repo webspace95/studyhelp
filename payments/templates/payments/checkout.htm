@@ -1,0 +1,69 @@
+
+
+{%extends 'base_layout.htm'%}
+{%load static%}
+
+{% block title %}
+    Study help &mdash; Checkout
+{% endblock %}
+
+{%block content%}
+    <section id="banner">
+        <div class="inner">
+            <div class="logo"><span class="icon fa-gem"></span></div>
+            <h2>Checkout</h2>
+        </div>
+    </section>
+    <section id="wrapper">
+        <!-- One -->
+        <section id="one" class="wrapper spotlight style1">
+            <div class="inner">
+                <div class="content">
+                    <p>You have to pay for your order first for you to download the completed assignment files. <br/> For more information, you can read our How we work policy by clicking the link below</p>
+                    <a href="/how_we_work/" class="special">How We Work</a>
+                </div>
+            </div>
+        </section>
+    </section>
+{%endblock%}
+
+{%block footer%}
+<section id="footer">
+    <div class="inner">
+        <h2 class="major">Billing Address</h2>
+        <p></p>
+        <form method="post" action="/payments/checkout/{{order.reference_code}}/">
+            <div class="row gtr-uniform">
+                {%csrf_token%}
+                <div class="col-12">
+                    <label for="billing_address">Address</label>
+                    <input type="text" id="billing_address" name="billing_address" placeholder="1234 Main St">
+                </div>
+                <div class="col-12">
+                    <label for="billing_address2">Address 2 (Optional)</label>
+                    <input type="text" id="billing_address2" name="billing_address2" placeholder="Apartment or suite">
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <label for="billing_zip">Zip code</label>
+                    <input type="text" name="billing_zip" id="billing_zip" placeholder="Billing Zip"/>
+                </div>
+                <div class="col-12">
+                    <ul class="actions">
+                        <li><input type="submit" value="Submit" class="primary" /></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+        <ul class="copyright">
+            <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li> 
+            <li><a href="/how_we_work/">How we work</a></li> 
+            <li><a href="/revision_policy/">Revision policy</a></li>
+            <li><a href="/refund_policy/">Refund policy</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/create_order/">Order</a></li>
+            <li><a href="/samples/">Samples</a></li>
+            <li>Design: <a href="#">Web Space</a></li>
+        </ul>
+    </div>
+</section>
+{%endblock%}
