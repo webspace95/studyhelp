@@ -9,10 +9,7 @@ from .models import Payment,Address
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from .forms import CheckoutForm
-<<<<<<< HEAD
 from paypal.standard.forms import PayPalPaymentsForm
-=======
->>>>>>> 8d2b6b611c04d1e033c101e077a0e1fc36816bb7
 
 from django.contrib import messages
 from contacts.models import Whatsapp
