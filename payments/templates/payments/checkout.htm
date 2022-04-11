@@ -24,6 +24,14 @@
         <form method="post" action="/payments/checkout/{{order.reference_code}}/">
             <div class="row gtr-uniform">
                 {%csrf_token%}
+                <div class="col-6 col-12-xsmall">
+                    <label for="first_name">First name</label>
+                    <input type="text" name="first_name" id="first_name"/>
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <label for="last_name">Last name</label>
+                    <input type="text" name="last_name" id="last_name"/>
+                </div>
                 <div class="col-12">
                     <label for="billing_address">Address</label>
                     <input type="text" id="billing_address" name="billing_address" placeholder="1234 Main St">

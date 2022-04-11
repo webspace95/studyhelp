@@ -47,12 +47,16 @@ def checkout_view(request,slug):
             m_billing_address = form.cleaned_data['billing_address']
             m_billing_address2 = form.cleaned_data['billing_address2']
             m_billing_zip = form.cleaned_data['billing_zip']
+            m_first_name = form.cleaned_data['first_name']
+            m_last_name = form.cleaned_data['last_name']
     
             try:
                 address = Address(
                                   user = request.user,
                                   street_address=m_billing_address,
                                   apartment_address=m_billing_address2,
+                                  first_name=m_first_name,
+                                  last_name=m_last_name,
                                   zip=m_billing_zip)
                 address.save()
 

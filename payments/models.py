@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django_countries.fields import CountryField
 # Create your models here.
 
 class Address(models.Model):
@@ -8,6 +9,8 @@ class Address(models.Model):
                              on_delete=models.CASCADE,blank=True,null=True)
     street_address = models.CharField(max_length=100,blank=True,null=True)
     apartment_address = models.CharField(max_length=100,blank=True,null=True)
+    first_name = models.CharField(max_length=100,blank=True,null=True)
+    last_name = models.CharField(max_length=100,blank=True,null=True)
     zip = models.CharField(max_length=100)
 
     def __str__(self):
