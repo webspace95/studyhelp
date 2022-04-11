@@ -1,0 +1,18 @@
+<!--
+    <section id="banner">
+        <div class="inner">
+            <div class="logo"><span class="icon fa-gem"></span></div>
+            <h2>Checkout</h2>
+        </div>
+    </section>
+    <section id="wrapper">
+        <!-- One -->
+        <section id="one" class="wrapper spotlight style1">
+            <div class="inner">
+                <div class="content">
+                    <p>You have to pay for your order first for you to download the completed assignment files. <br/> For more information, you can read our How we work policy by clicking the link below</p>
+                    <a href="/how_we_work/" class="special">How We Work</a>
+                </div>
+            </div>
+        </section>
+    </section>-->

@@ -8,30 +8,15 @@
 {% endblock %}
 
 {%block content%}
-    <section id="banner">
-        <div class="inner">
-            <div class="logo"><span class="icon fa-gem"></span></div>
-            <h2>Checkout</h2>
-        </div>
-    </section>
-    <section id="wrapper">
-        <!-- One -->
-        <section id="one" class="wrapper spotlight style1">
-            <div class="inner">
-                <div class="content">
-                    <p>You have to pay for your order first for you to download the completed assignment files. <br/> For more information, you can read our How we work policy by clicking the link below</p>
-                    <a href="/how_we_work/" class="special">How We Work</a>
-                </div>
-            </div>
-        </section>
-    </section>
+
+
 {%endblock%}
 
 {%block footer%}
 <section id="footer">
     <div class="inner">
-        <h2 class="major">Billing Address</h2>
-        <p></p>
+        <h2 class="major"> Checkout </h2>
+        <p>Enter your Billing Address</p>
         <form method="post" action="/payments/checkout/{{order.reference_code}}/">
             <div class="row gtr-uniform">
                 {%csrf_token%}
@@ -54,6 +39,32 @@
                 </div>
             </div>
         </form>
+        <ul class="contact">
+            <p>Order details go here </p>
+            {%for phone in phone_numbers%}
+            <li class="icon solid fa-phone">{{phone.phone}}</li>
+            {%endfor%}
+            
+            {%for gmail in gmail_links %}
+            <li class="icon solid fa-envelope"><a href="#">{{gmail.link}}</a></li>
+            {%endfor%}
+
+            {%for twitter in twitter_accounts%}
+            <li class="icon brands fa-twitter"><a href="https://www.{{twitter.twitter}}">{{twitter.twitter}}</a></li>
+            {%endfor%}
+
+            {%for fb in fb_accounts%}
+            <li class="icon brands fa-facebook-f"><a href="https://www.{{fb.facebook}}">{{fb.facebook}}</a></li>
+            {%endfor%}
+
+            {%for ig in instagram_accounts%}
+            <li class="icon brands fa-instagram"><a href="https://www.{{ig.ig}}">{{ig.ig}}</a></li>
+            {%endfor%}
+            
+            {%for number in whatsapp%}
+            <li class="icon brands fa-whatsapp">+<a href="https://api.whatsapp.com/send?phone={{number.number}}">{{number.number}}</a></li>
+            {%endfor%}
+        </ul>
         <ul class="copyright">
             <li>&copy;<script>document.write(new Date().getFullYear())</script> Study Help. All rights reserved.</li> 
             <li><a href="/how_we_work/">How we work</a></li> 

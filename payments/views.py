@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from .forms import CheckoutForm
 from paypal.standard.forms import PayPalPaymentsForm
-from .forms import MyPayPalPaymentsForm
+
 from django.contrib import messages
 from contacts.models import Whatsapp
 from page_edits.models import GmailLink,InstagramAccount,TwitterAccount,FacebookAccount,PhoneNumber
@@ -100,7 +100,7 @@ def payment_view(request,slug):
                                               reverse('payment_cancelled')),
     }
 
-    form = MyPayPalPaymentsForm(initial=paypal_dict)
+    form = PayPalPaymentsForm(initial=paypal_dict)
 
     context = {
                 'gmail_links':gmail_links,
