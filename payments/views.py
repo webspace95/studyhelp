@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect, \
     get_object_or_404, reverse
 from django.views.generic import ListView,DetailView,View
 from django.contrib import messages
+from django import forms
 
 from django.conf import settings
 from decimal import Decimal
@@ -55,7 +56,7 @@ def checkout_view(request,slug):
                                   zip=m_billing_zip)
                 address.save()
 
-                messages.success(request,"Billing address saved succesfully")
+                messages.success(request,"Billing address saved succesfully. Click the Buy button to complete payment")
                 return redirect('/payments/payment/'+order.reference_code+'/')
 
             except Exception as e:
@@ -101,7 +102,7 @@ def payment_view(request,slug):
     }
 
     form = PayPalPaymentsForm(initial=paypal_dict)
-
+    
     context = {
                 'gmail_links':gmail_links,
                 'instagram_accounts':instagram_accounts,
@@ -118,9 +119,11 @@ def payment_view(request,slug):
 
 @csrf_exempt
 def payment_done(request):
-    return render(request, 'payments/payment_done.htm')
+    messages.success(request, "Your payment has been completed succesfully")
+    return redirect('/dashboard')
 
 
 @csrf_exempt
 def payment_canceled(request):
-    return render(request, 'payments/payment_cancelled.htm')
+    messages.warning(request, "Your payment has been cancelled. Please try again later")
+    return redirect('/dashboard')
