@@ -8,14 +8,18 @@
 {% endblock %}
 
 {%block content%}
-
+{%for number in whatsapp%}
+<a href="https://api.whatsapp.com/send?phone={{number.number}}" class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>
+{% endfor %}
 
 {%endblock%}
 
 {%block footer%}
 <section id="footer">
     <div class="inner">
-        <h2 class="major"> Checkout </h2>
+        <h2 class="major"> Checkout Form</h2>
         <p>Enter your Billing Address</p>
         <form method="post" action="/payments/checkout/{{order.reference_code}}/">
             <div class="row gtr-uniform">
@@ -40,7 +44,6 @@
             </div>
         </form>
         <ul class="contact">
-            <p>Order details go here </p>
             {%for phone in phone_numbers%}
             <li class="icon solid fa-phone">{{phone.phone}}</li>
             {%endfor%}
