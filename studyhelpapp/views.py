@@ -4,6 +4,8 @@ from .forms import ContactForm
 from order_form_edits.forms import OrderForm, OrderFileForm
 from django.conf import settings
 from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -22,35 +24,6 @@ import random
 import string
 import smtplib
 
-GMAIL_USER = 'studyhelp312@gmail.com'
-GMAIL_PASSWORD = '$6085hto'
-SENT_FROM = 'studyhelp312@gmil.com'
-TO = ['studyhelp312@gmail.com']
-
-
-
-class SendMail:
-    def __init__(self,gmail_user,gmail_password,email_text,sent_from,to,subject,body):
-        self.gmail_user = gmail_user
-        self.gmail_password = gmail_password
-
-        self.email_text = email_text
-
-        self.sent_from = sent_from
-        self.to = to
-        self.subject = subject
-        self.body = body
-
-    def send_mail(self):
-        try:
-            smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-            smtp_server.ehlo()
-            smtp_server.login(self.gmail_user, self.gmail_password)
-            smtp_server.sendmail(self.sent_from, self.to, self.email_text)
-            smtp_server.close()
-            print ("Email sent successfully!")
-        except Exception as ex:
-            print ("Something went wrong….",ex)
 
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
@@ -110,6 +83,29 @@ def index_page(request):
             try:
                 contact = Contact(name=m_name,email=email_address,message=mail_message)
                 contact.save()
+
+                # Sending contact email
+                template = render_to_string('emails/contact.html',{'name':m_name})
+
+                email = EmailMessage(
+                    'Studyhelp contact notification',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [email_address],
+                )
+                email.fail_silently = False
+                email.send()
+
+                # Admin email notification
+                admin_email = EmailMessage(
+                    'Contact notification from' +email_address,
+                    mail_message,
+                    settings.EMAIL_HOST_USER,
+                    ['studyhelp email account'],
+                )
+                admin_email.fail_silently = False
+                admin_email.send()
+
                 messages.success(request,"Message sent succesfully.")
                 return redirect('/')
 
@@ -169,6 +165,29 @@ def about_view(request):
             try:
                 contact = Contact(name=m_name,email=email_address,message=mail_message)
                 contact.save()
+
+                # Sending contact email
+                template = render_to_string('emails/contact.html',{'name':m_name})
+
+                email = EmailMessage(
+                    'Studyhelp contact notification',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [email_address],
+                )
+                email.fail_silently = False
+                email.send()
+                
+                # Admin email notification
+                admin_email = EmailMessage(
+                    'Contact notification from' +email_address,
+                    mail_message,
+                    settings.EMAIL_HOST_USER,
+                    ['studyhelp email account'],
+                )
+                admin_email.fail_silently = False
+                admin_email.send()
+
                 messages.success(request,"Message sent succesfully.")
                 return redirect('/about/')
 
@@ -263,18 +282,27 @@ def create_order(request):
             order.save()
 
             #add functionality to send email here
-            SUBJECT = order.reference_code
-            BODY = order.instructions
-            EMAIL_TEXT = """\
-            From: %s
-            To: %s
-            Subject: %s
+            # Sending contact email
+            template = render_to_string('emails/order.html',{'name':m_name,'refcode':order.reference_code})
 
-            %s
-            """ % (SENT_FROM, ", ".join(TO), SUBJECT, BODY)
-            my_mail = SendMail(GMAIL_USER, GMAIL_PASSWORD, EMAIL_TEXT, SENT_FROM, TO, SUBJECT, BODY)
-            my_mail.send_mail()
+            email = EmailMessage(
+                'Studyhelp Order  Creation',
+                template,
+                settings.EMAIL_HOST_USER,
+                [m_email],
+            )
+            email.fail_silently = False
+            email.send()
 
+            # Admin email notification
+            admin_email = EmailMessage(
+                'Order notification from' +email_address,
+                m_instructions,
+                settings.EMAIL_HOST_USER,
+                ['studyhelp email account'],
+            )
+            admin_email.fail_silently = False
+            admin_email.send()
             messages.success(request,'Your order was created succesfully')
             messages.success(request,'Please copy the reference code and send it to our official email address or whatsapp number for more communication')
             messages.success(request,'You can acces our Whatsapp account through the floating button below')
@@ -331,6 +359,29 @@ def samples(request):
             try:
                 contact = Contact(name=m_name,email=email_address,message=mail_message)
                 contact.save()
+
+                # Sending contact email
+                template = render_to_string('emails/contact.html',{'name':m_name})
+
+                email = EmailMessage(
+                    'Studyhelp contact notification',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [email_address],
+                )
+                email.fail_silently = False
+                email.send()
+
+                # Admin email notification
+                admin_email = EmailMessage(
+                    'Contact notification from' +email_address,
+                    mail_message,
+                    settings.EMAIL_HOST_USER,
+                    ['studyhelp email account'],
+                )
+                admin_email.fail_silently = False
+                admin_email.send()
+
                 messages.success(request,"Message sent succesfully.")
                 return redirect('/samples/')
 
@@ -391,6 +442,29 @@ def dashboard(request):
             try:
                 contact = Contact(name=m_name,email=email_address,message=mail_message)
                 contact.save()
+
+                # Sending contact email
+                template = render_to_string('emails/contact.html',{'name':m_name})
+
+                email = EmailMessage(
+                    'Studyhelp contact notification',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [email_address],
+                )
+                email.fail_silently = False
+                email.send()
+
+                # Admin email notification
+                admin_email = EmailMessage(
+                    'Contact notification from' +email_address,
+                    mail_message,
+                    settings.EMAIL_HOST_USER,
+                    ['studyhelp email account'],
+                )
+                admin_email.fail_silently = False
+                admin_email.send()
+
                 messages.success(request,"Message sent succesfully.")
                 return redirect('/dashboard/')
 
@@ -449,6 +523,29 @@ def order_description(request,slug):
             try:
                 contact = Contact(name=m_name,email=email_address,message=mail_message)
                 contact.save()
+
+                # Sending contact email
+                template = render_to_string('emails/contact.html',{'name':m_name})
+
+                email = EmailMessage(
+                    'Studyhelp contact notification',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [email_address],
+                )
+                email.fail_silently = False
+                email.send()
+
+                # Admin email notification
+                admin_email = EmailMessage(
+                    'Contact notification from' +email_address,
+                    mail_message,
+                    settings.EMAIL_HOST_USER,
+                    ['studyhelp email account'],
+                )
+                admin_email.fail_silently = False
+                admin_email.send()
+
                 messages.success(request,"Message sent succesfully.")
                 return redirect('/order_description/'+order.reference_code+'/')
 
@@ -506,6 +603,7 @@ def order_files(request,slug):
             m_file = doc['docfile']
             m_file_name = "File:"+order.reference_code+""
             try:
+                #REVISIT THIS
                 file = OrderFile(name= order.reference_code,file=m_file)
                 file.save()
                 order.order_files.add(file)
@@ -579,6 +677,29 @@ def revision_policy(request):
             try:
                 contact = Contact(name=m_name,email=email_address,message=mail_message)
                 contact.save()
+
+                # Sending contact email
+                template = render_to_string('emails/contact.html',{'name':m_name})
+
+                email = EmailMessage(
+                    'Studyhelp contact notification',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [email_address],
+                )
+                email.fail_silently = False
+                email.send()
+
+                # Admin email notification
+                admin_email = EmailMessage(
+                    'Contact notification from' +email_address,
+                    mail_message,
+                    settings.EMAIL_HOST_USER,
+                    ['studyhelp email account'],
+                )
+                admin_email.fail_silently = False
+                admin_email.send()
+
                 messages.success(request,"Message sent succesfully.")
                 return redirect('/revision_policy/')
 
@@ -651,6 +772,29 @@ def refund_policy(request):
             try:
                 contact = Contact(name=m_name,email=email_address,message=mail_message)
                 contact.save()
+
+                # Sending contact email
+                template = render_to_string('emails/contact.html',{'name':m_name})
+
+                email = EmailMessage(
+                    'Studyhelp contact notification',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [email_address],
+                )
+                email.fail_silently = False
+                email.send()
+
+                # Admin email notification
+                admin_email = EmailMessage(
+                    'Contact notification from' +email_address,
+                    mail_message,
+                    settings.EMAIL_HOST_USER,
+                    ['studyhelp email account'],
+                )
+                admin_email.fail_silently = False
+                admin_email.send()
+
                 messages.success(request,"Message sent succesfully.")
                 return redirect('/refund_policy/')
 
@@ -716,6 +860,29 @@ def how_we_work(request):
             try:
                 contact = Contact(name=m_name,email=email_address,message=mail_message)
                 contact.save()
+
+                # Sending contact email
+                template = render_to_string('emails/contact.html',{'name':m_name})
+
+                email = EmailMessage(
+                    'Studyhelp contact notification',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [email_address],
+                )
+                email.fail_silently = False
+                email.send()
+
+                # Admin email notification
+                admin_email = EmailMessage(
+                    'Contact notification from' +email_address,
+                    mail_message,
+                    settings.EMAIL_HOST_USER,
+                    ['studyhelp email account'],
+                )
+                admin_email.fail_silently = False
+                admin_email.send()
+
                 messages.success(request,"Message sent succesfully.")
                 return redirect('/how_we_work/')
 
