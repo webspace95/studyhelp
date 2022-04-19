@@ -32,6 +32,7 @@ class Faq(models.Model):
     id = models.AutoField(primary_key=True)
     question = models.CharField( max_length=256)
     answer = models.TextField()
+    date = models.DateTimeField(auto_now_add=True,blank=True,null=True)
 
     def __str__(self):
         return self.question

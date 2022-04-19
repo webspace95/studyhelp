@@ -601,13 +601,11 @@ def order_files(request,slug):
 
             doc = request.FILES #returns a dict-like object
             m_file = doc['docfile']
-            m_file_name = "File:"+order.reference_code+""
+            m_file_name = "File: "+order.reference_code+""
             try:
                 #REVISIT THIS
-                file = OrderFile(name= order.reference_code,file=m_file)
+                file = OrderFile(name= m_file_name,file=m_file,order=order)
                 file.save()
-                order.order_files.add(file)
-                order.save()
 
                 messages.success(request,"File uploaded successfully")
                 return redirect('/order_files/'+order.reference_code+'/')

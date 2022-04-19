@@ -21,13 +21,7 @@ class Writer(models.Model):
     def __str__(self):
         return self.name
 
-class OrderFile(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(blank=True,null=True,max_length=50)
-    file = models.FileField(max_length=100,blank=True,null=True)
 
-    def __str__(self):
-        return self.name
 
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
@@ -64,12 +58,17 @@ class Order(models.Model):
     payment_complete = models.CharField(max_length=1,choices=PAYMENT_COMPLETE_CHOICES,blank=True,null=True,default="F")
     writer =  models.ForeignKey(Writer,  on_delete=models.CASCADE, blank=True,null=True)
 
-    #file field
-    order_files = models.ManyToManyField(OrderFile, blank=True)
-
     def __str__(self):
         return self.reference_code
 
+class OrderFile(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(blank=True,null=True,max_length=50)
+    file = models.FileField(max_length=100,blank=True,null=True)
+    order = models.ForeignKey(Order, blank=True,null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 class Sample(models.Model):
     id = models.AutoField(primary_key=True)
