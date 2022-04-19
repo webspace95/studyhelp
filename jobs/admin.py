@@ -21,7 +21,7 @@ class OrderAdmin(admin.ModelAdmin):
                     'price',
                     'writer')
 
-    list_filter = ('email','subject','type','payment_complete','status','writer')
+    list_filter = ('email','subject','payment_complete','status','writer')
 
 class SampleAdmin(admin.ModelAdmin):
     list_display = ('title',
