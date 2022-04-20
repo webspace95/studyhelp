@@ -426,7 +426,7 @@ def dashboard(request):
         'completed_orders':completed_orders,
         'current_orders':current_orders,
         'whatsapp':whatsapp,
-        'dadhboard_title':dashboard_title,
+        'dashboard_title':dashboard_title,
         'dashboard_meta':dashboard_meta
     }
 
