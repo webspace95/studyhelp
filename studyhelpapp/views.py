@@ -296,7 +296,7 @@ def create_order(request):
 
             # Admin email notification
             admin_email = EmailMessage(
-                'Order notification from' +email_address,
+                'Order notification from' +m_email,
                 m_instructions,
                 settings.EMAIL_HOST_USER,
                 ['studyhelp email account'],
