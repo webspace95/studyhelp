@@ -66,8 +66,8 @@ def checkout_view(request,slug):
                     order.billing_address = billing_address
                     order.save()
                 else:
-                    messages.info(
-                        self.request, "No default billing address available")
+                    messages.warning(
+                        request, "No default billing address available")
                     return redirect('/payments/checkout/'+order.reference_code+'/')
             else:
                 # User is entering a new billing Address
@@ -76,16 +76,33 @@ def checkout_view(request,slug):
                 m_billing_zip = form.cleaned_data['billing_zip']
                 m_first_name = form.cleaned_data['first_name']
                 m_last_name = form.cleaned_data['last_name']
-        
+
                 try:
-                    address = Address(
+                    user = request.user
+
+                    if user.first_name and user.last_name:
+                        address = Address(
                                     user = request.user,
                                     street_address=m_billing_address,
                                     apartment_address=m_billing_address2,
                                     first_name=m_first_name,
                                     last_name=m_last_name,
                                     zip=m_billing_zip)
-                    address.save()
+                        address.save()
+                    else:
+                        user.first_name = m_first_name
+                        user.save()
+                        user.last_name = m_last_name
+                        user.save()
+
+                        address = Address(
+                                    user = request.user,
+                                    street_address=m_billing_address,
+                                    apartment_address=m_billing_address2,
+                                    first_name=m_first_name,
+                                    last_name=m_last_name,
+                                    zip=m_billing_zip)
+                        address.save()
 
                     # Setting default billing address
                     set_default_billing = form.cleaned_data.get(

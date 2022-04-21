@@ -26,11 +26,11 @@
                 {%csrf_token%}
                 <div class="col-6 col-12-xsmall">
                     <label for="first_name">First name</label>
-                    <input type="text" name="first_name" id="first_name"/>
+                    <input type="text" name="first_name" id="first_name" value="{{user.first_name}}"/>
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <label for="last_name">Last name</label>
-                    <input type="text" name="last_name" id="last_name"/>
+                    <input type="text" name="last_name" id="last_name" value="{{user.last_name}}"/>
                 </div>
                 <div class="col-12">
                     <label for="billing_address">Address</label>
@@ -45,13 +45,13 @@
                     <input type="text" name="billing_zip" id="billing_zip" placeholder="Billing Zip"/>
                 </div>
 
-                <div class="col-6 col-12-small">
+                <div class="col-12">
                     <input type="checkbox" id="set_default_billing" name="set_default_billing">
                     <label for="set_default_billing">Save as default billing address</label>
                 </div>
 
                 {% if default_billing_address %}
-                <div class="col-6 col-12-small">
+                <div class="col-12">
                     <input type="checkbox" id="use_default_billing" name="use_default_billing">
                     <label for="use_default_billing">Use default billing address: {{ default_billing_address.street_address|truncatechars:10 }}</label>
                 </div>

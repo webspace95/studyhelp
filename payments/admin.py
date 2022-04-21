@@ -8,8 +8,8 @@ class PaymentAdmin(admin.ModelAdmin):
     list_filter = ('user','timestamp')
 
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('user','street_address','apartment_address','zip')
-    list_filter = ('user',)
+    list_display = ('user','street_address','apartment_address','zip','default')
+    list_filter = ('user','default')
 
 admin.site.register(Payment,PaymentAdmin)
 admin.site.register(Address,AddressAdmin)
