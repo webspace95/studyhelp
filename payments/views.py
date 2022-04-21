@@ -65,6 +65,9 @@ def checkout_view(request,slug):
                     billing_address = address_qs[0]
                     order.billing_address = billing_address
                     order.save()
+
+                    messages.success(request,"Using default Billing address. Click the Buy button to complete payment")
+                    return redirect('/payments/payment/'+order.reference_code+'/')
                 else:
                     messages.warning(
                         request, "No default billing address available")
@@ -111,6 +114,9 @@ def checkout_view(request,slug):
                     if set_default_billing:
                         address.default = True
                         address.save()
+                        
+                    order.billing_address = address
+                    order.save()
 
                     messages.success(request,"Billing address saved succesfully. Click the Buy button to complete payment")
                     return redirect('/payments/payment/'+order.reference_code+'/')
