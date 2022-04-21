@@ -1,4 +1,5 @@
 from django.db import models
+from payments.models import Payment, Address
 from django.conf import settings
 from order_form_edits.forms import ACADEMIC_CHOICES,SPACING_CHOICES,SUBJECT_CHOICES,TYPE_CHOICES,FORMAT_CHOICES,DAY_CHOICES,PAGE_CHOICES
 
@@ -60,9 +61,9 @@ class Order(models.Model):
 
     #payment and address
     billing_address = models.ForeignKey(
-        'Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
+        Address, related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
     payment = models.ForeignKey(
-        'Payment', on_delete=models.SET_NULL, blank=True, null=True)
+        Payment, on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.reference_code
