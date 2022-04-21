@@ -11,4 +11,6 @@ class CheckoutForm(forms.Form):
     billing_zip = forms.CharField(required=False)
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
+    set_default_billing = forms.BooleanField(required=False)
+    use_default_billing = forms.BooleanField(required=False)
 

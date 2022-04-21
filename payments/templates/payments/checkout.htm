@@ -44,6 +44,19 @@
                     <label for="billing_zip">Zip code</label>
                     <input type="text" name="billing_zip" id="billing_zip" placeholder="Billing Zip"/>
                 </div>
+
+                <div class="col-6 col-12-small">
+                    <input type="checkbox" id="set_default_billing" name="set_default_billing">
+                    <label for="set_default_billing">Save as default billing address</label>
+                </div>
+
+                {% if default_billing_address %}
+                <div class="col-6 col-12-small">
+                    <input type="checkbox" id="use_default_billing" name="use_default_billing">
+                    <label for="use_default_billing">Use default billing address: {{ default_billing_address.street_address|truncatechars:10 }}</label>
+                </div>
+                {% endif %}
+
                 <div class="col-12">
                     <ul class="actions">
                         <li><input type="submit" value="Submit" class="primary" /></li>

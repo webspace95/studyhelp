@@ -58,6 +58,12 @@ class Order(models.Model):
     payment_complete = models.CharField(max_length=1,choices=PAYMENT_COMPLETE_CHOICES,blank=True,null=True,default="F")
     writer =  models.ForeignKey(Writer,  on_delete=models.CASCADE, blank=True,null=True)
 
+    #payment and address
+    billing_address = models.ForeignKey(
+        'Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
+    payment = models.ForeignKey(
+        'Payment', on_delete=models.SET_NULL, blank=True, null=True)
+
     def __str__(self):
         return self.reference_code
 

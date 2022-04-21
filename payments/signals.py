@@ -34,6 +34,9 @@ def payment_notification(sender, **kwargs):
             )
             payment.save()
 
+            order.payment = payment
+            order.save()
+
             # Sending contact email
             template = render_to_string('emails/payment.html',{'name':order.user.username,'refcode':order.reference_code})
 

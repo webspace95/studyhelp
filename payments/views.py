@@ -40,33 +40,68 @@ def checkout_view(request,slug):
                 'order':order,
               }
 
+    billing_address_qs = Address.objects.filter(
+        user=request.user,
+        default=True
+    )
+    if billing_address_qs.exists():
+        context.update(
+            {'default_billing_address': billing_address_qs[0]})
+    
+
     if request.method == 'POST':
         form =CheckoutForm(request.POST)
         if form.is_valid():
+            use_default_billing = form.cleaned_data.get(
+                    'use_default_billing')
 
-            m_billing_address = form.cleaned_data['billing_address']
-            m_billing_address2 = form.cleaned_data['billing_address2']
-            m_billing_zip = form.cleaned_data['billing_zip']
-            m_first_name = form.cleaned_data['first_name']
-            m_last_name = form.cleaned_data['last_name']
-    
-            try:
-                address = Address(
-                                  user = request.user,
-                                  street_address=m_billing_address,
-                                  apartment_address=m_billing_address2,
-                                  first_name=m_first_name,
-                                  last_name=m_last_name,
-                                  zip=m_billing_zip)
-                address.save()
+            if use_default_billing:
+                print("Using the defualt billing address")
+                address_qs = Address.objects.filter(
+                    user=request.user,
+                    default=True
+                )
+                if address_qs.exists():
+                    billing_address = address_qs[0]
+                    order.billing_address = billing_address
+                    order.save()
+                else:
+                    messages.info(
+                        self.request, "No default billing address available")
+                    return redirect('/payments/checkout/'+order.reference_code+'/')
+            else:
+                # User is entering a new billing Address
+                m_billing_address = form.cleaned_data['billing_address']
+                m_billing_address2 = form.cleaned_data['billing_address2']
+                m_billing_zip = form.cleaned_data['billing_zip']
+                m_first_name = form.cleaned_data['first_name']
+                m_last_name = form.cleaned_data['last_name']
+        
+                try:
+                    address = Address(
+                                    user = request.user,
+                                    street_address=m_billing_address,
+                                    apartment_address=m_billing_address2,
+                                    first_name=m_first_name,
+                                    last_name=m_last_name,
+                                    zip=m_billing_zip)
+                    address.save()
 
-                messages.success(request,"Billing address saved succesfully. Click the Buy button to complete payment")
-                return redirect('/payments/payment/'+order.reference_code+'/')
+                    # Setting default billing address
+                    set_default_billing = form.cleaned_data.get(
+                            'set_default_billing')
 
-            except Exception as e:
-                messages.warning(request,"Please enter all the required fields")
-                print(e)
-                return redirect('/payments/checkout/'+order.reference_code+'/')
+                    if set_default_billing:
+                        address.default = True
+                        address.save()
+
+                    messages.success(request,"Billing address saved succesfully. Click the Buy button to complete payment")
+                    return redirect('/payments/payment/'+order.reference_code+'/')
+
+                except Exception as e:
+                    messages.warning(request,"Please enter all the required fields")
+                    print(e)
+                    return redirect('/payments/checkout/'+order.reference_code+'/')
         else:
             messages.warning(request,"Plese complete all the required fields")
             print("exception occured or something")
