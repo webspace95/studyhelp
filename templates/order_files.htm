@@ -4,6 +4,11 @@
     Study help - {% for title in order_title %} {{title.title_description}} {% endfor %}
 {% endblock %}
 {% block extra_head %}
+<style type="text/css">
+    input[type="file"] {
+        display: none;
+    }
+</style>
 {% for meta in order_meta %}
 <meta name="description" content="{{meta.description}}"/>
 <meta name="keywords" content="{{meta.keywords}}"/>
@@ -28,16 +33,19 @@
 <section id="footer" class="wrapper spotlight">
     <div class="inner">
         <h2 class="major">Add Order Files</h2>
-        <p></p>
+        <p>You can add additional files for more instructions on your order</p>
         <form method="post" enctype="multipart/form-data" action="/order_files/{{order.reference_code}}/">
             <div class="row gtr-uniform">
                 {%csrf_token%}
                 <div class="col-12">
-                    {{form.docfile}}
+                    <label class="button fit">
+                        <input type="file" name="docfile"/>
+                        Choose File
+                    </label>
                 </div>
                 <div class="col-12">
                     <ul class="actions">
-                        <li><input type="submit" value="Submit" class="primary" /></li>
+                        <li><input type="submit" value="Submit File" class="button fit" /></li>
                     </ul>
                 </div>
             </div>
