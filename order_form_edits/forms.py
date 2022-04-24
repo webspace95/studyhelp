@@ -73,3 +73,5 @@ class OrderForm(forms.Form):
 
 class OrderFileForm(forms.Form):
     docfile = forms.FileField(label='', max_length=100, required=False)
+
+    docfile.widget.attrs.update({'class': 'button fit'})
